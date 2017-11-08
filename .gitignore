@@ -1,3 +1,6 @@
-/node_modules
+/Merchant/node_modules
+/HQ/node_modules
+/Merchant/package-lock.json
+/HQ/package-lock.json
 developer.txt
 package-lock.json
