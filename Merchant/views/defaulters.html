@@ -1,0 +1,71 @@
+<!-- 
+    allow the operator to select from options the start date to query
+ -->
+<div class="container pt-4 h-100">
+    <div class="row h-100">
+        <div class="d-none d-md-block col-md-3 col-lg-3">
+            <div class="d-flex justify-content-center align-items-stretch flex-column">
+                <div class="my-2">
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Options</h4>
+                        <p>This will allow you to filter the results in question. Select the one that suits your criteria.</p>
+                        <hr/>
+                        <div class="form-group">
+                            <input autofocus="autofocus" type="text" class="form-control" placeholder="Phone or ID" id="q">
+                        </div>
+                        <div class="form-group">
+                            <select name="" id="selectopt" class="custom-select bg-info text-white py-2 w-100">
+                                <option disabled selected>Select period..</option>
+                                <option value="1">Past week</option>
+                                <option value="2">Past 2 weeks</option>
+                                <option value="3">Past 3 weeks</option>
+                                <option value="4">Past month</option>
+                                <option value="5">Past year</option>
+                            </select>
+                        </div>
+
+                        <hr/>
+                        <div class="text-center">
+                            <p><span class="mdi mdi-alert"></span></p>
+                            <i class="mb-0">
+                            Whenever you want to request some info from the farmer as to why they have opted to default, options have been provided
+                             </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-9 h-100" id="def_cont">
+            <div class="row h-100">
+                <div class="col-12 h-100">
+                    <div class="card list-group-panel h-100">
+                        <div class="card-body h-100">
+                            <ul class="list-group list-group-header">
+                                <li class="list-group-item list-group-body text-info">
+                                    <div class="row">
+                                        <div class="col-3 text-left">Name</div>
+                                        <div class="col-3">Phone</div>
+                                        <div class="col-2">ID Number</div>
+                                        <div class="col-2">+ Days</div>
+                                        <div class="col-2">- Days</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-body h-100" id="list_data">
+                                <div class="d-flex justify-content-center align-items-center h-75">
+                                    <div>
+                                        <span>Select period to consider from the left</span>
+                                        <div class="text-center text-info">
+                                            waiting..<span class="mdi mdi-autorenew mdi-spin"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

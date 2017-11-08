@@ -1,0 +1,85 @@
+<!-- 
+    *
+    *this file retrieves data that has been entered and stored within the
+    *browser's local storage
+    *
+ -->
+<link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+<div class="container my-4">
+    <div id="col_cont">
+        <span class="alert alert-danger alert-dismissible">
+            <small><i> Member data that appears on this page is awaiting submission.
+                Changes to this data is available in Today's Collections tab.Reload this page to see it in action</i></small>
+        </span>
+
+        <div class="mt-4">
+            <table class="table table-striped table-hover table-bordered" id="tbl_b_send" cellspacing="0" width='100%'>
+                <thead>
+                    <tr>
+                        <th colspan="3">Individual details</th>
+                        <th colspan="2">Weekly collections(Today)</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Time</th>
+                        <th>Amount(L)</th>
+                    </tr>
+                </thead>
+                <!-- 
+                    TABLE WILL BE CREATED DYNAMICALLY 
+                -->
+
+            </table>
+        </div>
+    </div>
+    <div id="options" class="fixed-bottom m-3">
+        <span id="reveal" class="btn btn-danger float-right p-1">
+            <span class="mdi mdi-arrow-all mdi-24px"></span>
+        </span>
+    </div>
+    <div id="data_actions">
+        <div>
+            <button type="button" class="btn btn-outline-danger" id="col_discard">Discard Collections &nbsp; 
+                <span class="mdi mdi-delete-forever"></span></button>
+            <button type="button" class="btn btn-outline-info" id="sub_confirm" data-toggle="modal" data-target="#confirm_code">Submit Collections &nbsp; 
+                <span class="mdi mdi-arrow-right-drop-circle"></span></button>
+        </div>
+    </div>
+</div>
+
+<div class="confirm-code-dialog" id="confirm_code">
+    <div class="modal-holder">
+        <div class="modal-header">
+            <h6 class="modal-title">Your merchant code is required to ensure integrity</h6>
+            <button type="button" class="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body pb-1">
+            <form name="modal_form" id="MODAL_FORM">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="mdi mdi-cloud-check"></span>
+                        </span>
+                        <input type="text" required="required" class="form-control" placeholder="GHR7RE" id="merchant_code" name="merchant_code" autocomplete="off" autofocus="autofocus">
+                    </div>
+                    <small>Merchant code</small>
+                    <small class="float-right p-2 text-danger" id="processing_status">Processing......&nbsp; <i class="mdi mdi-orbit mdi-spin"></i></small>
+                </div>
+                <p style="float: right; clear:both">
+                    <button class="btn btn-outline-secondary" type="button" id="back">
+                          <span class="mdi mdi-arrow-left-bold-circle-outline"></span>&nbsp; Back </button>
+                    <button type="submit" class="btn btn-outline-info" id="conf_btn">Confirm Code & Submit &nbsp;
+                          <span class="mdi mdi-approval"></span>
+                    </button>
+                </p>
+                <p style="clear: both">
+                    <small>To note: by entering your merchant code and confirming submit, you approve the collections,and you will be held responsible for any error(s) that may arise afterwards!</small>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,184 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    color: teal;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.main_wrapper {
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+button {
+    cursor: pointer;
+}
+
+#side_nav {
+    width: 16vw;
+    height: 100%;
+    box-shadow: 2px 3px 4px 2px rgba(0, 0, 0, 0.2);
+    transition: 0.8s;
+    position: relative;
+    overflow-y: hidden;
+    color: white;
+}
+
+#menu_toggler {
+    display: none;
+}
+
+#dashboard_content {
+    width: 84vw;
+    height: 100%;
+    position: relative;
+    overflow-y: scroll;
+    transition: 0.9s;
+}
+
+.close-button a {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 25px;
+    padding: 5px;
+    color: black;
+    text-decoration: none;
+}
+
+#side_nav_options li {
+    cursor: pointer;
+}
+
+#bottom_footer_nav {
+    position: absolute;
+    bottom: 8px;
+}
+
+#refresh_icon {
+    cursor: pointer;
+}
+
+#members_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* preloader */
+
+#preloader_cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    background-color: rgba(255, 255, 255, 0.891);
+    z-index: 999;
+    transition: 3s;
+}
+
+#preloader {
+    height: 250px;
+    width: 250px;
+}
+
+#preloader img {
+    width: 100%;
+    height: 100%;
+}
+
+#data_actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    margin: 10px;
+    transition: 1s;
+    z-index: 999;
+}
+
+th {
+    color: #17a2b8 !important
+}
+
+.confirm-code-dialog {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    transition: 4s;
+    z-index: 999;
+}
+
+.modal-holder {
+    position: absolute;
+    width: 550px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 15px 15px 0 15px;
+}
+
+#processing_status {
+    display: none;
+}
+
+progress[value] {
+    -moz-appearance: none;
+    -ms-progress-appearance: none;
+    -webkit-appearance: none;
+    width: 250px;
+    height: 20px;
+}
+
+progress[value]::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+progress[value]::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%), -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.25)), -webkit-linear-gradient(left, #09c, #f44);
+    border-radius: 3px;
+    background-size: 35px, 20px, 100% 100%, 100% 100%;
+    -webkit-animation: animate-stripes 5s linear infinite;
+    animation: animate-stripes 5s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+    100% {
+        background-position: -100px 0px;
+    }
+}
+
+@keyframes animate-stripes {
+    100% {
+        background-position: -100px 0px;
+    }
+}

@@ -1,0 +1,96 @@
+<!-- 
+
+    Author: Danny Sofftie
+    Modified date: Oct 26 2017 01:18
+    
+ -->
+
+<div class="h-100" id="members_area">
+    <div class="card w-50">
+        <div class="card-header">
+            <strong>
+                <small>After collecting farmer's details, the request will be processed within 5 minutes and the farmer will receive an access token via the mobile number provided. If this fails, you are required to repeat the process.</small>
+            </strong>
+        </div>
+        <div class="card-body">
+            <form name="add_m_form" id="add_members">
+                <div class="form-group row m-0 p-0">
+                    <small class="col-lg-12 col-md-12 mb-1 p-0">Full names</small>
+                    <div class="input-group col-lg-5 col-md-5 m-0 p-0">
+                        <span class="input-group-addon">
+                        <span class="mdi mdi-account"></span>
+                        </span>
+                        <input type="text" name="first_name" class="form-control" placeholder="First name" required="required">
+                    </div>
+                    <div class="input-group col-lg-6 col-md-6 ml-4 p-0">
+                        <span class="input-group-addon">
+                            <span class="mdi mdi-account"></span>
+                        </span>
+                        <input type="text" name="last_name" class="form-control" placeholder="Last name" required="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <small>Select region</small>
+                    <select name="region_code" id="region_code" class="custom-select form-control">
+                        
+                    </select>
+                </div>
+                <div class="form-group">
+                    <small>Mobile number</small>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <span class="mdi mdi-phone"></span>
+                        </span>
+                        <input type="tel" name="phone" id="phone" class="form-control" placeholder="Mobile number" required="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <small>ID number</small>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                         <span class="mdi mdi-numeric"></span>
+                        </span>
+                        <input type="text" name="id_number" id="id_number" class="form-control" placeholder="ID number" required="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <small>Optional email adress</small>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                         <span class="mdi mdi-email"></span>
+                        </span>
+                        <input type="email" class="form-control" name="email" placeholder="Optional email address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-block btn-outline-info" id="request_approval">Request membership &nbsp; <span class="mdi mdi-chevron-double-right"></span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card ml-5" id="authorization_area">
+        <div class="card-header">
+            <h6>Membership approval</h6>
+        </div>
+        <div class="card-body">
+            <form name="app_m">
+                <div class="form-group">
+                    <small>Member didn't get code?</small>
+                    <button class="btn btn-outline-info btn-block" type="button" id="res_auth">Resend code &nbsp; <span class="mdi mdi-replay"></span></button>
+                </div>
+                <div class="form-group">
+                    <small>If member got code, input below to authorize</small>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="mdi mdi-code-parentheses"></span>
+                        </span>
+                        <input type="text" name="auth_code" id="auth_code" class="form-control" placeholder="Authorization code">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-info btn-block" type="submit">Authorize &nbsp; <span class="mdi mdi-auto-fix"></span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
