@@ -1,0 +1,68 @@
+html,
+body {
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.main_wrapper {
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+button {
+    cursor: pointer;
+}
+
+#side_nav {
+    width: 16vw;
+    height: 100%;
+    box-shadow: 0px 1px 11px 1px rgba(0, 0, 0, 0.3);
+    transition: 0.8s;
+    position: relative;
+    overflow-y: hidden;
+}
+
+.close {
+    padding: 2px;
+    cursor: pointer;
+}
+
+#dashboard_content {
+    width: 84vw;
+    height: 100%;
+    position: relative;
+    overflow-y: scroll;
+    transition: 0.9s;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 5px 11px 4px rgba(0, 0, 0, 0.3);
+}
+
+.nav_options {
+    border-bottom: 0.5px solid gray;
+    cursor: pointer;
+    transition: 0.3s;
+    border-left: 4px solid teal;
+}
+
+.nav_options:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-left: 6px solid coral;
+    border-bottom: none;
+    box-shadow: 0px 5px 14px 0px rgba(0, 0, 0, 0.3);
+}
+
+nav .mdi {
+    cursor: pointer;
+    padding: 2px 3px;
+}
+
+nav .mdi:hover {
+    background-color: hsl(180, 3%, 7%);
+}
