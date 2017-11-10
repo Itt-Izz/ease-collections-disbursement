@@ -108,10 +108,3 @@ CREATE TABLE cl_transaction (
 -- drop table cl_transaction
 
 */
-
-
-
-
-
-
-

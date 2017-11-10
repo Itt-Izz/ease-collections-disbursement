@@ -1,6 +1,4 @@
 (() => {
-	
-	
     function start() {
         let count = 0;
         let pg = document.getElementById('progressbar');
@@ -17,7 +15,7 @@
         }, 35)
     };
     start();
-	
+
     document.getElementById('r_cache').onclick = () => {
         document.getElementById('pg_cont').style.display = 'inline-block';
         start();
@@ -167,4 +165,5 @@
             })
         };
     }, 3000);
+
 })();

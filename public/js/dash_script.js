@@ -14,7 +14,6 @@
      *      r_s-review collections
      *      a_b-absentees
      *      r_p-reports section link
-     *
      */
 
     let m = document.getElementById('menu_toggler');
@@ -141,7 +140,7 @@
     ab.onclick = (e) => {
         /*
          * will view a list of members
-         * advanced options will be available, 
+         * advanced options will be available,
          * e.g. send a reminder notification to farmers
          */
         fetch_htm('/data/defaulters', '?defaulters|defectors', 'defaulters')
