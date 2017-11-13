@@ -5,10 +5,49 @@
 
  -->
 
-<div class="row">
-    <div class="card">
-        <div class="card-body">
-            <h6>Reports section</h6>
+<div class="row h-75">
+    <div class="col-12 text-center text-muted">
+        <h6>Default: Data for previous 30 days, and 12 months</h6>
+    </div>
+    <!-- 
+        data for previous 30 days
+     -->
+    <div class="col-md-7 col-lg-7">
+        <canvas id="line_30" height="180"></canvas>
+    </div>
+    <!-- 
+        data for previous 12 months
+     -->
+    <div class="col-md-5 col-lg-5">
+        <canvas id="pie" height="250"></canvas>
+    </div>
+    <!-- divider -->
+    <div class="dropdown-divider col-12"></div>
+    <!-- 
+        customized and user choice data
+     -->
+    <div class="col-md-12 col-lg-12 text-center">
+        <h6 class="text-muted">More customized data graphs</h6>
+    </div>
+    <div class="col-3">
+        <small class="text-muted">Select option to consider</small>
+        <div class="form-group">
+            <select name="sel" id="sel" class="form-control">
+                <option disabled selected>..................</option>
+                <option value="1">Previous 10 days</option>
+                <option value="2">Previous 20 days</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3">
+        <small class="text-muted">Select region to consider</small>
+        <div class="form-group">
+            <select name="sel" id="sel" class="form-control">
+                <option disabled selected>Region...</option>
+                <!-- 
+                    regions will be populated dynamically
+                 -->
+            </select>
         </div>
     </div>
 </div>

@@ -1,0 +1,205 @@
+<!-- 
+
+    merchants, reports, and ,merchant specific data
+
+ -->
+<div class="row h-100">
+    <div class="col-sm-12 col-md-9 col-lg-9">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <!-- merchant entry -->
+            <div class="text-center" id="prompt">
+                <!-- prompt entry -->
+                <div>
+                    <h5 class="text-muted">Add new merchants when need be</h5>
+                    <small class="text-muted">This would require the merchant to have access to their mobile phone to approve authentication</small>
+                    <div>
+                        <button class="btn btn-outline-danger" id="add">Add merchant &nbsp; <span class="mdi mdi-lock-plus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card w-50 d-none" style="border-radius: 6px" id="m_reg">
+                <h6 class="p-3">Merchant registration & account recovery</h6>
+                <!--  -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item nav-link" id="reg">Register &nbsp;<span class="mdi mdi-account-plus"></span></li>
+                    <li class="nav-item nav-link" id="rec">Recover &nbsp; <span class="mdi mdi-account-convert"></span></li>
+                </ul>
+                <!--  -->
+                <div class="tab-content card-body">
+                    <div id="register">
+                        <form name="form_merchant" class="animated fadeIn">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-info">
+                                         <span class="mdi mdi-account-alert"></span>
+                                    </span>
+                                    <input type="text" name="first_name" id="first_name" class="form-control form-control-sm" placeholder="First name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-info">
+                                         <span class="mdi mdi-account"></span>
+                                    </span>
+                                    <input type="text" name="last_name" id="last_name" class="form-control form-control-sm" placeholder="Last name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-info">
+                                         <span class="mdi mdi-gmail"></span>
+                                    </span>
+                                    <input type="email" name="email" id="email" class="form-control form-control-sm" placeholder="someone@example.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-info">
+                                       <span class="mdi mdi-phone"></span>
+                                    </span>
+                                    <input type="tel" name="phone" id="phone" class="form-control form-control-sm" placeholder="1234567890">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <select name="reg_id" id="region" class="form-control">
+                                    <option disabled selected>Select region</option>
+                                    <!-- other regions to be loaded here dynamically -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="text-muted">
+                                    <label class="form-check-label pl-0">
+                                        <input type="checkbox" class="custom-checkbox">
+                                        <small>Agree to terms of <a href="#!">privacy policy</a></small>
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info btn-block">Register &nbsp; <span class="mdi mdi-play-circle-outline"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="recover" style="display: none">
+                        <form name="recover_merchant" class="animated fadeIn">
+                            <div class="alert alert-danger">
+                                Before you proceed, please ensure the merchant has access to their email address, phone, or both. A one time password will be sent to them.
+                            </div>
+                            <div class="form-group">
+                                <select name="m_code" id="m_Code" class="form-control">
+                                    <option disabled selected>Merchant code</option>
+                                    <!-- other regions to be loaded here dynamically -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-info">
+                                       <span class="mdi mdi-phone"></span>
+                                    </span>
+                                    <input type="tel" name="phone" id="rec_phone" class="form-control form-control-sm" placeholder="1234567890">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-info">
+                                         <span class="mdi mdi-email"></span>
+                                    </span>
+                                    <input type="tel" name="email" id="rec_email" class="form-control form-control-sm" placeholder="someone@example.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-danger btn-block">Send recovery password &nbsp;<span class="mdi mdi-approval"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3 col-lg-3">
+        <div class="card bg-info text-white mt-1">
+            <div class="card-title d-flex justify-content-between">
+                <h5>Merchant endpoints</h5>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+            <div class="card-body animated zoomIn text-center">
+                <div class="d-flex justify-content-between">
+                    <h3 class="mdi mdi-note-multiple-outline"></h3>
+                    <h3>1,500</h3>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-success text-white mt-1">
+            <div class="card-title d-flex justify-content-between">
+                <h5>Merchant status</h5>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+            <div class="card-body animated zoomIn text-center">
+                <div class="d-flex justify-content-between">
+                    <h3 class="mdi mdi-map-marker-circle"></h3>
+                    <h3>47 online</h3>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-danger text-white mt-1">
+            <div class="card-title d-flex justify-content-between">
+                <h5>Errors reported</h5>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+            <div class="card-body animated zoomIn text-center">
+                <div class="d-flex justify-content-between">
+                    <h3 class="mdi mdi-bug"></h3>
+                    <h3>3 today</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dropdown-divider"></div>
+<div class="row">
+    <div class="d-flex flex-column col-md-9 col-lg-9">
+        <div class="text-muted">
+            <span>Connect to all merchants easily and securely</span>
+            <span class="float-right">
+                <input type="text" class="form-control form-control-sm" placeholder="Filter....">
+            </span>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-body text-info">
+                        <div class="row">
+                            <div class="col-2 text-left">
+                                Name &nbsp;<span class="mdi mdi-account-network"></span></div>
+                            <div class="col-2">
+                                Code &nbsp;<span class="mdi mdi-rice"></span></div>
+                            <div class="col-2">
+                                ID &nbsp; <span class="mdi mdi-chip"></span></div>
+                            <div class="col-2">
+                                Phone &nbsp;<span class="mdi mdi-phone-classic"></span></div>
+                            <div class="col-2">
+                                SMS &nbsp;<span class="mdi mdi-message"></span></div>
+                            <div class="col-2">
+                                Email &nbsp;<span class="mdi mdi-email-alert"></span></div>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- data will show here dynamically -->
+
+            </div>
+            <div class="card-footer">
+                <small>Allows you to message or email each merchant individually, communication made easier</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+        <span class="text-muted">Or broadcast to them all</span>
+        <form name="brod_msg">
+            <div class="form-group">
+                <textarea name="message" id="message" rows="5" class="form-control" placeholder="Broadcast message........."></textarea>
+            </div>
+            <div class="form-group float-right">
+                <button class="btn btn-outline-info">SMS &nbsp;<span class="mdi mdi-message-text"></span></button>
+                <button class="btn btn-outline-danger">Email &nbsp;<span class="mdi mdi-email"></span></button>
+            </div>
+        </form>
+    </div>
+</div>

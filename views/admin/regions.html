@@ -1,0 +1,202 @@
+<!-- 
+
+    regions, manage them securely
+
+    
+ -->
+<div class="row">
+    <!-- header boxes with summarised infomation -->
+    <div class="col-sm-6 col-md-3 col-lg-3">
+        <div class="card bg-danger text-white mt-1">
+            <div class="card-title d-flex justify-content-between">
+                <h5>Total regions</h5>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+            <div class="card-body animated zoomIn text-center">
+                <div class="d-flex justify-content-between">
+                    <h3 class="mdi mdi-factory"></h3>
+                    <h3>1530</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-lg-3">
+        <div class="card bg-info text-white mt-1">
+            <div class="card-title d-flex justify-content-between">
+                <h5>Sub-regions</h5>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+            <div class="card-body animated zoomIn text-center">
+                <div class="d-flex justify-content-between">
+                    <h3 class="mdi mdi-map"></h3>
+                    <h3>15300</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-lg-3">
+        <div class="card bg-success text-white mt-1">
+            <div class="card-title d-flex justify-content-between">
+                <h6>Highest productive region</h6>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+            <div class="card-body animated zoomIn text-center">
+                <div class="d-flex justify-content-between">
+                    <h3 class="mdi mdi-arrange-bring-to-front"></h3>
+                    <h3>19 - 9,000</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-lg-3">
+        <div class="card bg-secondary text-white mt-1">
+            <div class="card-title d-flex justify-content-between">
+                <h6>Highest productive sub</h6>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+            <div class="card-body animated zoomIn text-center">
+                <div class="d-flex justify-content-between">
+                    <h3 class="mdi mdi-code-greater-than-or-equal"></h3>
+                    <h3>Street 9</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of header boxes -->
+</div>
+<div class="dropdown-divider"></div>
+<div class="row h-75 mb-4">
+
+    <!-- add region(s) -->
+
+    <div class="col-sm-12 col-md-5 col-lg-5" style="border-right: 1px solid teal;">
+        <div class="d-flex justify-content-center align-items-center h-75">
+            <div class="animated fadeIn">
+                <!-- add region prompt -->
+                <div id="add_prompt" class="text-center">
+                    <h6 class="text-muted">Add region(s) which are currently not in record</h6>
+                    <button class="btn btn-outline-info">
+                        Add a region &nbsp; <span class="mdi mdi-plus-circle-outline"></span>
+                    </button>
+                </div>
+                <!-- add region container -->
+                <form name="add_reg" id="add_r_cont" class="animated zoomIn">
+                    <div class="form-group">
+                        <small>County</small>
+                        <select name="merchant_id" id="" class="form-control">
+                                <option disabled selected>Select county</option>
+                                <!-- 
+                                    other merchant codes will be loaded here dynamically
+                                    e.g. <option value='1'>GHP-47F</option>,
+                                    where GHP-47F is the merchant code to send the message to
+                                 -->
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <small>Region name</small>
+                        <input type="text" required="required" class="form-control" name="reg_name" placeholder="Region name">
+                    </div>
+                    <button class="btn btn-outline-info btn-block">Commit add &nbsp; <span class="mdi mdi-source-branch"></span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7 col-lg-7">
+
+        <!-- todays collection by region -->
+
+        <div class="container">
+            <span class="text-muted animated fadeIn">Today's collection by region</span>
+            <span class="float-right">
+                <input type="text" class="form-control form-control-sm" placeholder="Filter region">
+            </span>
+        </div>
+        <div class="card h-100 mt-1 w-100">
+            <div class="card-body h-100 py-0 animated fadeIn">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-body text-info">
+                        <div class="row">
+                            <div class="col-2 text-left">Code</div>
+                            <div class="col-3">Name</div>
+                            <div class="col-3">Merchant</div>
+                            <div class="col-2">Total</div>
+                            <div class="col-2">Time</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list-group list-group-body h-100" id="list_data">
+                    <div class="d-flex justify-content-center align-items-center h-75">
+                        <div>
+                            <span class="btn btn-outline-dark">
+                                <span class="mdi mdi-autorenew"></span>
+                            </span>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+        <!-- end of todays collection by region -->
+
+    </div>
+</div>
+<div class="dropdown-divider"></div>
+<div class="row my-5">
+
+    <!-- data comparison from the past 6 days -->
+
+    <div class="col-sm-12 col-md-9 col-lg-9">
+        <div class="d-flex flex-column">
+            <div class="text-muted">
+                <small>Comparison with data from the past 6 days</small>
+                <span class="float-right">
+                    <input type="text" class="form-control form-control-sm" placeholder="Filter....">
+                </span>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item list-group-body text-info">
+                            <div class="row">
+                                <div class="col-3 text-left">Merchant</div>
+                                <div class="col-3">Region</div>
+                                <div class="col-1">{ }</div>
+                                <div class="col-1">{ }</div>
+                                <div class="col-1">{ }</div>
+                                <div class="col-1">{ }</div>
+                                <div class="col-1">{ }</div>
+                                <div class="col-1">{ }</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- data will show here dynamically -->
+
+                </div>
+                <div class="card-footer">
+                    <small>If you notice some abnormal or inaccurate results, request info from the merchant serving that region</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- message box to merchant communication -->
+    <div class="col-md-3 col-lg-3">
+        <form name="msg_merchant">
+            <div class="form-group">
+                <select name="merchant_id" id="" class="form-control">
+                    <option disabled selected>Merchant code</option>
+                    <!-- 
+                        other merchant codes will be loaded here dynamically
+                        e.g. <option value='1'>GHP-47F</option>,
+                        where GHP-47F is the merchant code to send the message to
+                     -->
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea name="message" required="required" class="form-control text-muted" rows="4" placeholder="Inquiry message........."></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-secondary btn-block">Commit message &nbsp; <span class="mdi mdi-send"></span></button>
+        </form>
+    </div>
+</div>

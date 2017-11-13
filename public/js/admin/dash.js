@@ -1,8 +1,6 @@
 (() => {
     /**
-     *
      * admin dashboard
-     *
      */
     let c = document.querySelector('span.close');
     let m = document.querySelector('span.mdi-menu');
@@ -25,9 +23,29 @@
 
     // side navigation options
     let da = document.getElementById('content_wrapper');
+    let preloader = `<div id="preloader_cont" class="pt-5">
+                        <div id="preloader">
+                            <img src="/images/processing.gif" alt="preloader">
+                        </div>
+                    </div>`;
 
-    function fetch_htm(url, rep_url, scripts) {
-        history.replaceState(null, null, rep_url);
+    function fetch_htm(url, title, rep_url, scripts) {
+        document.querySelectorAll('.nav_options').forEach((e) => {
+            e.classList.remove('bg-info', 'text-white');
+        });
+
+        // top_loader
+        let count = 0;
+        let timer = setInterval(function() {
+            count++;
+            document.querySelector('div.top_loader').style.width = `${count}%`;
+            if (count >= 100) {
+                clearInterval(timer);
+                document.querySelector('div.top_loader').style.width = 0;
+            }
+        }, 20);
+
+        history.pushState(null, title, rep_url);
         da.innerHTML = preloader;
         let arr = Array.from(scripts.trim())
         if (arr.length !== 0) {
@@ -60,15 +78,46 @@
     let mr = document.getElementById('merchants');
     let cf = document.getElementById('config');
     let sc = document.getElementById('secure');
-    db.onclick = () => {
+    db.onclick = function() {
         location.reload();
+        history.replaceState(null, 'Dashboard | Data summary', '?dashboard--data-summary');
     }
-    rp.onclick = () => {
+    rp.onclick = function() {
         /*
          * load the reports html and js files
          */
-        fetch_htm('/admin/data/reports', '?reports--?/', 'reports');
+        fetch_htm('/admin/data/reports', 'Reports | Detailed data', '?reports--data-indepth', 'reports');
+        this.classList.add('bg-info', 'text-white')
     }
+    rg.onclick = function() {
+        /*
+         * load the regions html and js files
+         */
+        fetch_htm('/admin/data/regions', 'Regions | Manage data', '?regions--manage-re', 'regions');
+        this.classList.add('bg-info', 'text-white')
+    }
+
+    mr.onclick = function() {
+        /*
+         * load the merchants html and js files
+         */
+        fetch_htm('/admin/data/merchants', 'Merchants | Manage data', '?merchants--manage-m', 'merchants');
+        this.classList.add('bg-info', 'text-white')
+    };
+    cf.onclick = function() {
+        /*
+         * load the merchants html and js files
+         */
+        fetch_htm('/admin/data/conf', 'Configuration | Manage data', '?configuration--manage-c', 'conf');
+        this.classList.add('bg-info', 'text-white')
+    };
+    sc.onclick = function() {
+        /*
+         * load the merchants html and js files
+         */
+        fetch_htm('/admin/data/secure', 'Secure | Manage data', '?secure--manage-s', 'secure');
+        this.classList.add('bg-info', 'text-white')
+    };
 
     // plot today's data
     let ctx = document.getElementById('ctx');

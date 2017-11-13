@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * all admin authentication will be handled through this route
  */
 const express = require('express');
