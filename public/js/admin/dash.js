@@ -1,4 +1,23 @@
 (() => {
+
+    /**
+     * update notifications count
+     */
+    let nc = document.getElementById('errors');
+    let nt = document.getElementById('notifs');
+    let msg = document.getElementById('messages');
+    let type = 'count'
+    setInterval(
+        () => {
+            fetch(`/admin/data/notifs/${type}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    // populate the notifications pane
+                    nc.innerHTML = data[0].count;
+                    nt.innerHTML = data[2].count;
+                    msg.innerHTML = data[1].count;
+                })
+        }, 8000);
     /**
      * admin dashboard
      */
@@ -120,32 +139,100 @@
     };
 
     // plot today's data
-    let ctx = document.getElementById('ctx');
-    myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: 'Collections analytics',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'hsla(180, 53%, 33%, 0.618)'
-                ],
-                borderColor: [
-                    'hsla(180, 53%, 33%, 0.818)'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+    fetch('/admin/data/todayColls')
+        .then(res => res.json())
+        .then(result => {
+            // filter data to plot 
+            let lbls = [];
+            let dataRes = [];
+            for (let i = 0; i < result.length; i++) {
+                lbls.push(result[i].region_name);
+                dataRes.push(result[i].amount);
             }
-        }
-    });
+
+            // sum of all todays input to update todays total
+            let total = dataRes.reduce((a, b) => {
+                return a + b;
+            }, 0);
+            document.getElementById('tod_total').textContent = `${total} L`;
+
+            /**
+             * arrays filled, plot the graph now
+             */
+
+            let ctx = document.getElementById('ctx');
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: lbls,
+                    datasets: [{
+                        label: 'Collections analytics for today',
+                        data: dataRes,
+                        backgroundColor: [
+                            'hsla(180, 53%, 33%, 0.618)'
+                        ],
+                        borderColor: [
+                            'hsla(180, 53%, 33%, 0.818)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+
+    let by_reg = document.getElementById('by_reg');
+    let by_sub = document.getElementById('by_sub');
+    let by_coun = document.getElementById('by_coun');
+
+    /**
+     * bottom section to group collections by 
+     * @function  fetch(url:String)
+     * @argument (county,regions & sub regions)
+     */
+    function regData(region) {
+        fetch(`/admin/data/organizeByReg/${region}`)
+            .then(res => res.json())
+            .then(data => {
+                /*
+                 * json data, populate the region or sub-region selected/requested
+                 */
+                let li = '';
+                if (data.length < 1) {
+                    li += `
+                        <div class='text-danger text-center'>No data has been submitted today yet <span class='mdi mdi-emoticon'></span></div>
+                    `;
+                }
+                data.forEach((elem) => {
+                    li += `
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-5 text-left"><small>${elem.region_name}</small></div>
+                            <div class="col-6 text-left text-success"><small>${elem.amount} L</small></div>
+                        </div>
+                    </li>
+                    `;
+                })
+                document.getElementById('data_disp').innerHTML = li;
+            });
+    }
+
+    by_reg.onclick = function() {
+        regData('regions');
+    }
+    by_sub.onclick = function() {
+        regData('subcounties');
+    }
+    by_coun.onclick = function() {
+        regData('county');
+    }
 })();

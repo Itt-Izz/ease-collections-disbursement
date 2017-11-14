@@ -2,7 +2,6 @@
 
     reports
 
-
  -->
 
 <div class="row h-75">
@@ -49,5 +48,27 @@
                  -->
             </select>
         </div>
+    </div>
+    <div class="col-3">
+        <small class="text-muted">Select sub-region to consider</small>
+        <div class="form-group">
+            <select name="sel" id="sel" class="form-control">
+                <option disabled selected>Sub-region...</option>
+                <!-- 
+                    sub-regions will be populated dynamically, depending on the value of the region selected
+                -->
+                <option>
+                    Hey
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 
+        draw to the canvas after selected options change
+     -->
+    <div class="col-12 dropdown-divider"></div>
+    <div class="col-12">
+        <small class="text-muted">Data visualization</small>
     </div>
 </div>

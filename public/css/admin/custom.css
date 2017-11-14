@@ -120,3 +120,7 @@ nav .mdi:hover {
 .nav-link {
     cursor: pointer;
 }
+
+li:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.1);
+}

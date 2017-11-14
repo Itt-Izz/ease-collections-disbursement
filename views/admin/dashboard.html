@@ -81,14 +81,14 @@
                     <div class="container-fluid d-flex justify-content-between">
                         <div class="d-flex justify-content-around" style="width:190px">
                             <span class="mdi mdi-menu mdi-24px" style="display:none"></span>
-                            <span class="mdi mdi-account mdi-24px">
-                                <span class="badge badge-danger">7</span>
+                            <span class="mdi mdi-alert mdi-24px">
+                                <span class="badge badge-danger" id="errors">0</span>
                             </span>
                             <span class="mdi mdi-bell-plus mdi-24px">
-                                <span class="badge badge-info">3</span>
+                                <span class="badge badge-info" id="notifs">0</span>
                             </span>
                             <span class="mdi mdi-message-settings mdi-24px">
-                                <span class="badge badge-warning">
+                                <span class="badge badge-warning" id="messages">
                                     <small>new</small>
                                 </span>
                             </span>
@@ -119,7 +119,7 @@
                             <div class="card-body text-center animated zoomIn">
                                 <div class="d-flex justify-content-between">
                                     <h3 class="mdi mdi-chemical-weapon"></h3>
-                                    <h3>15,000 L</h3>
+                                    <h3 id="tod_total"></h3>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                             <div class="card-body animated zoomIn text-center">
                                 <div class="d-flex justify-content-between">
                                     <h3 class="mdi mdi-account-multiple-plus"></h3>
-                                    <h3>1530</h3>
+                                    <h3>{ in dev }</h3>
                                 </div>
 
                             </div>
@@ -144,7 +144,7 @@
                             <div class="card-body animated zoomIn text-center">
                                 <div class="d-flex justify-content-between">
                                     <h3 class="mdi mdi-cash-multiple"></h3>
-                                    <h3>85,000 </h3>
+                                    <h3>{ in dev }</h3>
                                 </div>
                             </div>
                         </div>
@@ -180,19 +180,36 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <ul class="nav nav-tabs card-header-tabs">
-                                            <li class="nav-item">
-                                                <a href="#!" class="nav-link">By regions&nbsp;<span class="mdi mdi-chevron-down"></span></a>
+                                            <li class="nav-item" id="by_reg">
+                                                <span href="#!" class="nav-link">By regions&nbsp;<span class="mdi mdi-chevron-down"></span></span>
                                             </li>
-                                            <li class="nav-item">
-                                                <a href="#!" class="nav-link">By sub-counties&nbsp;<span class="mdi mdi-chevron-down"></span></a>
+                                            <li class="nav-item" id="by_sub">
+                                                <span href="#!" class="nav-link">By sub-counties&nbsp;<span class="mdi mdi-chevron-down"></span></span>
                                             </li>
-                                            <li class="nav-item">
-                                                <a href="#!" class="nav-link">By county&nbsp;<span class="mdi mdi-chevron-down"></span></a>
+                                            <li class="nav-item" id="by_coun">
+                                                <span href="#!" class="nav-link">By county&nbsp;<span class="mdi mdi-chevron-down"></span></span>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="card-body">
-                                        34,700 litres submitted today
+                                        <ul class="list-group list-group-header">
+                                            <li class="list-group-item list-group-body text-info">
+                                                <div class="row">
+                                                    <div class="col-5 text-left">Name</div>
+                                                    <div class="col-6">Total collection</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="list-group list-group-body" id="data_disp">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <div class="text-muted">
+                                                    <small>Select period to consider from above options</small>
+                                                    <div class="text-center text-info">
+                                                        waiting..<span class="mdi mdi-autorenew mdi-spin"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ul>
                                     </div>
                                     <div class="card-footer">
                                         <small class="text-muted">This provides a numerical summary of all the collections submitted today.</small>

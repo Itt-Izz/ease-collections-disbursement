@@ -28,14 +28,14 @@ router.get('/reports', (req, res) => {
  * retrieve regions to add members to
  */
 router.get('/get_regions', (req, res) => {
-    data.retrieveRegions(req, res);
+    data.merchant.retrieveRegions(req, res);
 })
 
 /*
  * retrieve all clients
  */
 router.get('/client_list', (req, res) => {
-    data.retrieveClients(req, res);
+    data.merchant.retrieveClients(req, res);
 });
 
 /*
@@ -45,35 +45,35 @@ router.post('/post_colls', (req, res) => {
     /*
      * handle and errors, post to database, and send feedback
      */
-    data.submitColls(req, res);
+    data.merchant.submitColls(req, res);
 });
 
 router.get('/new_members', (req, res) => {
     /*
      * service new members request
      */
-    data.retrieveNewMembers(req, res);
+    data.merchant.retrieveNewMembers(req, res);
 });
 
 router.post('/member_info', (req, res) => {
     /*
      * specific member info request
      */
-    data.retrieveSpecific(req, res);
+    data.merchant.retrieveSpecific(req, res);
 })
 
 router.post('/requestValueByRow', (req, res) => {
     /*
      * request row values
      */
-    data.requestValueByRow(req, res);
+    data.merchant.requestValueByRow(req, res);
 })
 
 router.get('/getdefaulters/:period/:q', (req, res) => {
     /*
      * obtain defaulters
      */
-    data.retrieveDefaulters(req, res);
+    data.merchant.retrieveDefaulters(req, res);
 });
 
 // EXPOSE ROUTER TO THE SERVER

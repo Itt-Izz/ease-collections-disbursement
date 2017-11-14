@@ -101,10 +101,33 @@ if(isnull(new.date_joined)) then
 end if;
 $$
 DELIMITER ;
-/*
-CREATE TABLE cl_transaction (
-    id INT AUTO_INCREMENT
-);
--- drop table cl_transaction
 
-*/
+-- create table to hold notifications
+CREATE TABLE IF NOT EXISTS notifs (
+    id INT AUTO_INCREMENT,
+    notif_type ENUM('ERROR', 'MESSAGE', 'HELP'),
+    info NVARCHAR(200),
+    date DATETIME DEFAULT NOW(),
+    m_code INT,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_m_code FOREIGN KEY (m_code)
+        REFERENCES merchants (id)
+);
+alter table notifs add column status int default 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
