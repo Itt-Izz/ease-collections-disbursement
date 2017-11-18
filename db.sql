@@ -47,6 +47,7 @@ CREATE TABLE merchants (
         ON DELETE CASCADE
 );
 -- drop table merchants
+alter table merchants add index merch_code(merch_code);
 
 CREATE TABLE IF NOT EXISTS clients (
     id INT AUTO_INCREMENT,
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS clients (
 -- alter table clients add column date_joined date null after alt_phone
 -- drop table clients;
 
-CREATE TABLE collections (
+CREATE TABLE IF NOT EXISTS collections (
     id INT AUTO_INCREMENT,
     cl_code INT,
     cl_phone NVARCHAR(15),
@@ -79,9 +80,12 @@ CREATE TABLE collections (
     PRIMARY KEY (id),
     CONSTRAINT fk_cl_code FOREIGN KEY (cl_code)
         REFERENCES clients (id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_merchant_code FOREIGN KEY (cl_merch_id)
+        REFERENCES merchants (merch_code)
         ON DELETE CASCADE
 );
--- drop table collections
+-- drop table collections        
 
 /*
  trigger to update date column,(pick date of the server to ensure data integrity)

@@ -76,10 +76,10 @@
                         }
                     });
             }, this);
+            r();
         });
 
-    // delay DOM
-    setTimeout(() => {
+    function r() {
         /*
          * A DEAD SIMPLE AND STUPID WAY TO TRICK DATATABLES INITIALIZATION
          */
@@ -91,7 +91,7 @@
             // hide preloader
             let preloader = document.querySelector('div#preloader_cont');
             preloader.style.width = '0%';
-        }, 600);
+        }, 0);
 
         /*
          * write to localstorage,
@@ -164,6 +164,5 @@
                 }
             })
         };
-    }, 3000);
-
+    }
 })();

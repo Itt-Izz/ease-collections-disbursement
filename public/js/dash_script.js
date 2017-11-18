@@ -82,7 +82,7 @@
                         let s = document.getElementsByTagName('script')[0]
                         s.parentNode.insertBefore(script, s)
                         da.innerHTML = data;
-                    }, 100);
+                    }, 10);
                 });
         } else {
             fetch(url)
@@ -90,7 +90,7 @@
                 .then((data) => {
                     setTimeout(function() {
                         da.innerHTML = data;
-                    }, 100);
+                    }, 10);
                 });
         }
     };

@@ -2,15 +2,19 @@
 SELECT 
     *
 FROM
-    collections
+    collections;
+    
+DELETE FROM collections 
 WHERE
-    DATE(server_date) = CURDATE();
+    id > 0;
 
 -- select count total by region for today only
 SELECT 
     SUM(c.cl_amount) AS amount,
-    DATE(c.server_date) AS col_date,
-    r.region_name
+    r.region_name,
+    m.merch_code,
+    GROUP_CONCAT(CONCAT(TIME(c.server_time))
+        ORDER BY server_time DESC) time
 FROM
     collections c
         LEFT JOIN
@@ -19,7 +23,7 @@ FROM
     regions r ON m.region_code = r.id
 WHERE
     c.server_date = CURDATE()
-GROUP BY region_name , col_date;
+GROUP BY region_name , merch_code;
 
 
 -- SELECT COUNT BY PHONE
@@ -42,9 +46,7 @@ GROUP BY phone,id_number;
 
 -- selecting by constituencies / sub-counties
 SELECT 
-    SUM(c.cl_amount) AS amount,
-    DATE(c.server_date) AS col_date,
-    cn.constituency_name
+    SUM(c.cl_amount) amount, cn.constituency_name
 FROM
     constituencies cn
         INNER JOIN
@@ -54,8 +56,10 @@ FROM
         INNER JOIN
     collections c ON c.cl_merch_id = m.merch_code
 WHERE
-    c.server_date = CURDATE()
-GROUP BY constituency_name , col_date;
+    c.server_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+GROUP BY constituency_name
+ORDER BY amount DESC
+LIMIT 1;
 
 -- select and group totals by date for specific past days
 SELECT 
