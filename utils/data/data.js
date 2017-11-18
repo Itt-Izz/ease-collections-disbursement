@@ -496,5 +496,29 @@ exports.admin = {
             if (err) throw new Error(err)
             res.end(JSON.stringify(results));
         })
+    },
+    /**
+     * data comparison for the past 6 days
+     */
+    retrieveLastSixDays: (req, res) => {
+        database.conn.query(`
+                SELECT
+                SUM(c.cl_amount) AS amount,
+                m.merch_code,
+                r.region_name AS region_name,
+                DATE(c.server_date) date
+            FROM
+                regions r 
+                    INNER JOIN
+                merchants m ON m.region_code = r.id
+                    INNER JOIN
+                collections c ON c.cl_merch_id = m.merch_code
+            WHERE
+                c.server_date >= DATE_SUB(CURDATE(),INTERVAL 6 DAY)
+            GROUP BY region_name,merch_code,date    
+        `, (err, results) => {
+            if (err) throw new Error(err)
+            res.end(JSON.stringify(results));
+        })
     }
 };

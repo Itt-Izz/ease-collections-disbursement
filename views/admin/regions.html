@@ -144,7 +144,7 @@
         <!-- todays collection by region -->
 
         <div class="container">
-            <span class="text-muted animated fadeIn">Today's collection by region</span>
+            <span class="text-muted animated fadeIn">Today's collection by sub-regions</span>
             <span class="float-right">
                 <input type="text" id="filter_input" class="form-control form-control-sm" placeholder="Filter region">
             </span>
@@ -193,7 +193,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
+                    <ul class="list-group-flush">
                         <li class="list-group-item list-group-body text-info">
                             <div class="row">
                                 <div class="col-3 text-left">Merchant</div>
@@ -207,8 +207,11 @@
                             </div>
                         </li>
                     </ul>
-
-                    <!-- data will show here dynamically -->
+                    <ul class="list-group-flush" id="data_cont">
+                        <!--
+                             data will show here dynamically 
+                        -->
+                    </ul>
 
                 </div>
                 <div class="card-footer">

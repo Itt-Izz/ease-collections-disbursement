@@ -151,5 +151,13 @@ router.get('/allRegionsTotal', (req, res) => {
     data.admin.retrieveTodayRefined(req, res);
 })
 
+router.get('/lastSixDays', (req, res) => {
+    /*
+     * retrieve for the last 6 days for all the regions
+     */
+    data.admin.retrieveLastSixDays(req, res);
+});
+
+
 // expose router to server
 module.exports = router;

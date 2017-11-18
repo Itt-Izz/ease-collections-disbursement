@@ -135,12 +135,12 @@
                     `;
             }
             d.innerHTML = li;
-            t();
+            t(d);
         });
 
-    function t() {
+    function t(cont) {
         // filter to manage search
-        let _dd = d.querySelectorAll('div.row');
+        let _dd = cont.querySelectorAll('div.row');
         document.getElementById('filter_input').onkeyup = function(e) {
             let _v = this.value.toLowerCase();
             for (let i = 0; i < _dd.length; i++) {
@@ -152,4 +152,66 @@
             }
         }
     }
+
+    // data comparison for regions within the last 6 days
+    fetch('/admin/data/lastSixDays')
+        .then(res => res.json())
+        .then(data => {
+            let l = ''
+            let regions = [];
+            for (let i = 0; i < data.length; i++) {
+                if (regions.length < 1) {
+                    regions.push({
+                        name: data[i].region_name,
+                        code: data[i].merch_code,
+                        amount: [data[i].amount],
+                        date: [(data[i].date).substr(0, 10)]
+                    });
+                } else {
+                    function findATTR(a, atr, vl) {
+                        for (let j = 0; j < a.length; j++) {
+                            if (a[j][atr] === vl) {
+                                return j;
+                            }
+                        }
+                        return -1;
+                    }
+
+                    let ix = findATTR(regions, 'name', data[i].region_name);
+                    if (ix != -1) {
+                        regions[ix].amount.push(data[i].amount);
+                        regions[ix].date.push((data[i].date).substr(0, 10));
+                    } else {
+                        // create a new index with value
+                        regions.push({
+                            name: data[i].region_name,
+                            code: data[i].merch_code,
+                            amount: [data[i].amount],
+                            date: [(data[i].date).substr(0, 10)]
+                        });
+                    }
+
+                }
+            }
+            // data now available in regions array
+            let li = ''
+            for (let i = 0; i < regions.length; i++) {
+                let am = ''
+                for (let b = 0; b < regions[i].amount.length; b++) {
+                    am += `
+                        <div class="col-1">${regions[i].amount[b]}</div>
+                        `;
+                }
+                li += `
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-3 text-left">${regions[i].code}</div>
+                                <div class="col-3">${regions[i].name}</div>
+                                ${am}
+                            </div>
+                        </li>
+                    `;
+            }
+            document.getElementById('data_cont').innerHTML = li;
+        })
 })();
