@@ -520,5 +520,14 @@ exports.admin = {
             if (err) throw new Error(err)
             res.end(JSON.stringify(results));
         })
+    },
+    /**
+     * gets all the merchanty codes for password recovery
+     */
+    retrieveMerchantCodes: (req, res) => {
+        database.conn.query(`select merch_code from merchants`, (err, results) => {
+            if (err) throw new Error(err);
+            res.end(JSON.stringify(results));
+        })
     }
 };

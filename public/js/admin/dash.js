@@ -1,5 +1,16 @@
 (() => {
 
+    // check internet connection
+    setInterval(() => {
+        if (navigator.onLine) {
+            document.getElementById('netstats').style.display = 'none'
+        } else {
+            document.getElementById('netstats').style.display = 'flex'
+        }
+    }, 4000);
+    document.getElementById('reload').onclick = () => {
+        location.reload();
+    };
     /**
      * update notifications count
      */

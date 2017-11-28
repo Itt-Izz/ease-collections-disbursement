@@ -19,6 +19,7 @@
             </div>
             <div class="card w-50 d-none" style="border-radius: 6px" id="m_reg">
                 <h6 class="p-3">Merchant registration & account recovery</h6>
+                <small class="text-danger px-3" id="reg_rec_st"></small>
                 <!--  -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item nav-link" id="reg">Register &nbsp;<span class="mdi mdi-account-plus"></span></li>
@@ -27,7 +28,7 @@
                 <!--  -->
                 <div class="tab-content card-body">
                     <div id="register">
-                        <form name="form_merchant" class="animated fadeIn">
+                        <form name="rfm" id="rfm" class="animated fadeIn">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon bg-info">
@@ -73,7 +74,7 @@
                             <div class="form-group">
                                 <div class="text-muted">
                                     <label class="form-check-label pl-0">
-                                        <input type="checkbox" class="custom-checkbox">
+                                        <input type="checkbox" id="check" class="custom-checkbox">
                                         <small>Agree to terms of <a href="#!">privacy policy</a></small>
                                     </label>
                                 </div>
@@ -82,7 +83,7 @@
                         </form>
                     </div>
                     <div id="recover" style="display: none">
-                        <form name="recover_merchant" class="animated fadeIn">
+                        <form name="rec_pwd" class="animated fadeIn">
                             <div class="alert alert-danger">
                                 Before you proceed, please ensure the merchant has access to their email address, phone, or both. A one time password will be sent to them.
                             </div>

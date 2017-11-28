@@ -101,7 +101,6 @@
         e.preventDefault();
         rr(_fr, 'addRegion');
     }
-
     // take the sub region name and register
     _fsub.onsubmit = function(e) {
         e.preventDefault();
@@ -176,13 +175,11 @@
                         }
                         return -1;
                     }
-
                     let ix = findATTR(regions, 'name', data[i].region_name);
                     if (ix != -1) {
                         regions[ix].amount.push(data[i].amount);
                         regions[ix].date.push((data[i].date).substr(0, 10));
                     } else {
-                        // create a new index with value
                         regions.push({
                             name: data[i].region_name,
                             code: data[i].merch_code,
@@ -190,7 +187,6 @@
                             date: [(data[i].date).substr(0, 10)]
                         });
                     }
-
                 }
             }
             // data now available in regions array

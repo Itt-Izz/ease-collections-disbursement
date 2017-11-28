@@ -15,10 +15,27 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/materialdesignicons.css">
     <link rel="stylesheet" href="/css/animate.css">
+    <style>
+        .pulse {
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+    </style>
 </head>
 
 <body>
     <div class="bg-info top_loader"></div>
+    <div class="w-100 d-flex justify-content-center" style="position: absolute; top: 0; z-index: 999;">
+        <div id="netstats" class="justify-content-between align-items-center animated pulse">
+            <div>Internet connection problem.</div>
+            <div>
+                <button class="btn btn-sm btn-outline-info" id="reload">reload 
+                <span class="mdi mdi-autorenew"></span>
+            </button>
+            </div>
+        </div>
+    </div>
+
     <div class="main_wrapper">
         <div class="d-sm-none d-md-block" id="side_nav">
             <div class="admin_cont">

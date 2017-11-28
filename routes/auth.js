@@ -44,7 +44,7 @@ router.post('/res_auth', (req, res) => {
     /*
      * resend auth code
      */
-    auth.res_auth(req, res);
+    auth.resendAuthCode(req, res);
 })
 
 // expose the router to server

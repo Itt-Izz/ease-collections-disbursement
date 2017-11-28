@@ -158,6 +158,12 @@ router.get('/lastSixDays', (req, res) => {
     data.admin.retrieveLastSixDays(req, res);
 });
 
+router.get('/merchantCodes', (req, res) => {
+    /*
+     * get all merchant codes
+     */
+    data.admin.retrieveMerchantCodes(req, res);
+})
 
 // expose router to server
 module.exports = router;

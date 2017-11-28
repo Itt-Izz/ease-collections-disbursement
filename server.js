@@ -25,8 +25,8 @@ app.use('/auth', require('./routes/auth'));
 app.use('/data', require('./routes/data'));
 app.use('/admin/auth', require('./routes/admin_auth'));
 app.use('/admin/data', require('./routes/admin_data'));
-// create http server;
 
+// create http server
 http.createServer(app).listen(port, () => {
     console.log(`Server listening at port ${port}`);
 })

@@ -1,6 +1,4 @@
 // merchant authentication
-const express = require('express');
-const router = express.Router();
 const database = require('../database/dbconfig');
 const crypto = require('crypto');
 
@@ -43,17 +41,17 @@ exports.register = (req, res) => {
     });
 };
 
-exports.registerClerk = (req, res) => {
-    let clerk_code = ((new Date() % 7e8).toString(36)).toUpperCase();
-    let clerk_pass = (new Date() % 7e9).toString(36);
-    /*
-     * register clerk
-     */
+// exports.registerClerk = (req, res) => {
+//     let clerk_code = ((new Date() % 7e8).toString(36)).toUpperCase();
+//     let clerk_pass = (new Date() % 7e9).toString(36);
+//     /*
+//      * register clerk
+//      */
 
-    res.end();
-}
+//     res.end();
+// }
 
-exports.res_auth = (req, res) => {
+exports.resendAuthCode = (req, res) => {
     database.conn.query(`select auth_code from clients where phone= +254${(req.body.phone).slice(-9)}`, (err, results) => {
         if (err) throw new Error(err);
         let auth_c = results[0].auth_code;
