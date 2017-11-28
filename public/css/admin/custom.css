@@ -8,11 +8,12 @@ body {
 #netstats {
     width: 340px;
     padding: 6px;
-    border: 1px solid teal;
     border-radius: 6px;
     z-index: 99999;
     color: white;
     display: none;
+    color: white;
+    background-color: #24323a9e;
 }
 
 

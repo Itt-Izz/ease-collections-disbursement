@@ -11,6 +11,7 @@ let auth = {
         let cred = {
             merch_fname: req.body.first_name,
             merch_lname: req.body.last_name,
+            id_number: req.body.id_number,
             merch_phone: `+254${(req.body.phone).slice(-9)}`,
             merch_email: req.body.email,
             merch_code: ((new Date % 7e8).toString(36)).toUpperCase(),

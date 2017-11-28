@@ -529,5 +529,41 @@ exports.admin = {
             if (err) throw new Error(err);
             res.end(JSON.stringify(results));
         })
+    },
+    /**
+     * count number of merchants
+     */
+    retrieveMerchantCount: (req, res) => {
+        database.conn.query('select count(merch_code) count from merchants', (err, result) => {
+            if (err) throw new Error(err);
+            res.end(JSON.stringify(result));
+        })
+    },
+    /**
+     * count number of merchants online
+     */
+    retrieveOnlineMerchants: (req, res) => {
+        database.conn.query('select count(merch_code) count from merchants', (err, result) => {
+            if (err) throw new Error(err);
+            res.end(JSON.stringify(result));
+        })
+    },
+    /**
+     * count errors reported today
+     */
+    retrieveErrorsToday: (req, res) => {
+        database.conn.query('select count(notif_type) count from notifs where DATE(date) = CURDATE() and status=0', (err, result) => {
+            if (err) throw new Error(err);
+            res.end(JSON.stringify(result));
+        })
+    },
+    /**
+     * retrieve all merchants with all their details
+     */
+    retrieveAllMerchants: (req, res) => {
+        database.conn.query('select * from merchants', (err, result) => {
+            if (err) throw new Error(err);
+            res.end(JSON.stringify(result));
+        })
     }
 };

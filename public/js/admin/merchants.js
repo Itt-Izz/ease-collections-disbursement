@@ -104,4 +104,56 @@
                 })
         }
     }
+
+
+    function r(u, c) {
+        fetch(`/admin/data/${u}`)
+            .then(res => res.json())
+            .then(data => {
+                c.innerHTML = data[0].count;
+            })
+    }
+
+    // count all merchants in the database
+    let mn = document.getElementById('merch_num');
+    r('allmerchants', mn);
+
+    let ms = document.getElementById('online');
+    r('merchantsonline', ms);
+
+    let er = document.getElementById('er');
+    r('errorstodaya', er);
+
+    // list all merchants with specific options, like phone, sms and email
+    let ma = document.getElementById('mer_all');
+    fetch('/admin/data/merchantsDetails')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            let li = ''
+            for (let i = 0; i < data.length; i++) {
+                li += `
+                <li class='list-group-item'>
+                    <div class='row'>
+                        <small class='col-2'>${data[i].merch_fname}</small>
+                        <small class='col-2'>${data[i].merch_code}</small>
+                        <small class='col-2'>${data[i].id_number}</small>
+                        <small class='col-2'>0${(data[i].merch_phone).slice(-9)}</small>
+                        <small class='col-2 text-center'>
+                            <a href='javascript:void(0)' class='text-success'>
+                                <span class='mdi mdi-message mdi-18px'></span>
+                            </a>
+                        </small>
+                        <small class='col-2 text-center'>
+                            <a href='mailto:${data[i].merch_email}' class='text-danger'>
+                                <span class='mdi mdi-gmail mdi-18px'></span>
+                            </a>
+                        </small>
+                    </div>
+                </li>
+                `;
+            }
+            ma.innerHTML = li;
+        })
+
 })();

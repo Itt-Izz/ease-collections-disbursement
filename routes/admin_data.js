@@ -165,5 +165,34 @@ router.get('/merchantCodes', (req, res) => {
     data.admin.retrieveMerchantCodes(req, res);
 })
 
+router.get('/allmerchants', (req, res) => {
+    /*
+     * get a count of all merchants
+     */
+    data.admin.retrieveMerchantCount(req, res);
+})
+
+router.get('/merchantsonline', (req, res) => {
+    /*
+     * get a count of all the merchants online
+     */
+    data.admin.retrieveOnlineMerchants(req, res);
+});
+
+router.get('/errorstodaya', (req, res) => {
+    /*
+     * get a count of errors reported today
+     */
+    data.admin.retrieveErrorsToday(req, res);
+});
+
+router.get('/merchantsDetails', (req, res) => {
+    /*
+     * get all merchants for communication purposes
+     */
+    data.admin.retrieveAllMerchants(req, res);
+});
+
+
 // expose router to server
 module.exports = router;

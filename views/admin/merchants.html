@@ -34,7 +34,7 @@
                                     <span class="input-group-addon bg-info">
                                          <span class="mdi mdi-account-alert"></span>
                                     </span>
-                                    <input type="text" name="first_name" id="first_name" class="form-control form-control-sm" placeholder="First name">
+                                    <input type="text" name="first_name" required="required" id="first_name" class="form-control form-control-sm" placeholder="First name">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -42,7 +42,15 @@
                                     <span class="input-group-addon bg-info">
                                          <span class="mdi mdi-account"></span>
                                     </span>
-                                    <input type="text" name="last_name" id="last_name" class="form-control form-control-sm" placeholder="Last name">
+                                    <input type="text" name="last_name" required="required" id="last_name" class="form-control form-control-sm" placeholder="Last name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon bg-info">
+                                        <span class="mdi mdi-calendar"></span>
+                                    </span>
+                                    <input type="text" name="id_number" id="id_number" required="required" class="form-control form-control-sm" placeholder="ID Number">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -50,7 +58,7 @@
                                     <span class="input-group-addon bg-info">
                                          <span class="mdi mdi-gmail"></span>
                                     </span>
-                                    <input type="email" name="email" id="email" class="form-control form-control-sm" placeholder="someone@example.com">
+                                    <input type="email" name="email" id="email" required="required" class="form-control form-control-sm" placeholder="someone@example.com">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -58,7 +66,7 @@
                                     <span class="input-group-addon bg-info">
                                        <span class="mdi mdi-phone"></span>
                                     </span>
-                                    <input type="tel" name="phone" id="phone" class="form-control form-control-sm" placeholder="1234567890">
+                                    <input type="tel" name="phone" id="phone" required="required" class="form-control form-control-sm" placeholder="1234567890">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -98,7 +106,7 @@
                                     <span class="input-group-addon bg-info">
                                        <span class="mdi mdi-phone"></span>
                                     </span>
-                                    <input type="tel" name="phone" id="rec_phone" class="form-control form-control-sm" placeholder="1234567890">
+                                    <input type="tel" name="phone" id="rec_phone" required="required" class="form-control form-control-sm" placeholder="1234567890">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -106,7 +114,7 @@
                                     <span class="input-group-addon bg-info">
                                          <span class="mdi mdi-email"></span>
                                     </span>
-                                    <input type="tel" name="email" id="rec_email" class="form-control form-control-sm" placeholder="someone@example.com">
+                                    <input type="tel" name="email" id="rec_email" required="required" class="form-control form-control-sm" placeholder="someone@example.com">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -127,7 +135,7 @@
             <div class="card-body animated zoomIn text-center">
                 <div class="d-flex justify-content-between">
                     <h3 class="mdi mdi-note-multiple-outline"></h3>
-                    <h3>1,500</h3>
+                    <h3 id="merch_num"></h3>
                 </div>
             </div>
         </div>
@@ -139,7 +147,7 @@
             <div class="card-body animated zoomIn text-center">
                 <div class="d-flex justify-content-between">
                     <h3 class="mdi mdi-map-marker-circle"></h3>
-                    <h3>47 online</h3>
+                    <h3 id="online">47 online</h3>
                 </div>
             </div>
         </div>
@@ -151,7 +159,7 @@
             <div class="card-body animated zoomIn text-center">
                 <div class="d-flex justify-content-between">
                     <h3 class="mdi mdi-bug"></h3>
-                    <h3>3 today</h3>
+                    <h3 id="er">1</h3>
                 </div>
             </div>
         </div>
@@ -170,8 +178,8 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-body text-info">
-                        <div class="row">
-                            <div class="col-2 text-left">
+                        <div class="row text-center">
+                            <div class="col-2">
                                 Name &nbsp;<span class="mdi mdi-account-network"></span></div>
                             <div class="col-2">
                                 Code &nbsp;<span class="mdi mdi-rice"></span></div>
@@ -186,9 +194,11 @@
                         </div>
                     </li>
                 </ul>
+                <ul class="list-group-flush" id="mer_all">
 
-                <!-- data will show here dynamically -->
+                    <!-- data will show here dynamically -->
 
+                </ul>
             </div>
             <div class="card-footer">
                 <small>Allows you to message or email each merchant individually, communication made easier</small>
