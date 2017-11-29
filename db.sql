@@ -1,6 +1,13 @@
 create database if not exists county_ps_;
 USE county_ps_;
 
+CREATE TABLE admin (
+    id INT AUTO_INCREMENT,
+    code NVARCHAR(40),
+    password NVARCHAR(200),
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE county (
     id INT AUTO_INCREMENT,
     county_name NVARCHAR(40),

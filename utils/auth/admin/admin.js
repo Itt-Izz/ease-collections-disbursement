@@ -4,6 +4,25 @@ const sms = require('../../includes/sms');
 
 let auth = {
     /**
+     * authenticate through login
+     */
+    requestAuthentication: (req, res) => {
+        let cred = {
+            auth_code: req.body.auth_code,
+            auth_pwd: req.body.auth_pwd
+        }
+        database.conn.query(`select * from admin where code = ${database.mysql.escape(cred.auth_code)} and password=${database.mysql.escape(cred.auth_pwd)}`, (err, result) => {
+            if (err) throw new Error(err);
+            if (result.length < 1) {
+                res.end(JSON.stringify({ message: "failed" }));
+            } else if (result.length == 1) {
+                // set sessions
+                req.app.locals.code = result[0].code;
+                res.end(JSON.stringify({ message: "authenticated" }));
+            }
+        })
+    },
+    /**
      * register merchant, send merchant code and login password
      */
     registerMerchant: (req, res) => {
@@ -67,6 +86,8 @@ let auth = {
                             if (result.affectedRows == 1) {
                                 // end operation
                                 res.end(JSON.stringify({ 'message': 'success' }))
+                            } else {
+                                res.end(JSON.stringify({ message: "error" }))
                             }
                         })
                     }

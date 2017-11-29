@@ -47,5 +47,13 @@ router.post('/res_auth', (req, res) => {
     auth.resendAuthCode(req, res);
 })
 
+router.get('/logout', (req, res) => {
+    // kick out the user
+    req.session.destroy(() => {
+        // destroyed sessions
+    })
+    res.redirect('/');
+});
+
 // expose the router to server
 module.exports = router;

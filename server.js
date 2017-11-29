@@ -2,6 +2,7 @@ const http = require('http');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session')
 const port = process.env.PORT | 3000;
 const app = express();
 
@@ -20,6 +21,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(allowCORS);
+app.use(session({
+    secret: "a4yhsg6729hjsteh",
+    resave: true,
+    saveUninitialized: true
+}));
+
 // route files
 app.use('/auth', require('./routes/auth'));
 app.use('/data', require('./routes/data'));

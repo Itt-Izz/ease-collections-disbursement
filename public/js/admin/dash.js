@@ -29,6 +29,68 @@
                     msg.innerHTML = data[1].count;
                 })
         }, 8000);
+
+    function f(u, c, t, icon) {
+        fetch(`/admin/data/notifications/${u}`)
+            .then(res => res.json())
+            .then(data => {
+                let li = "";
+                for (let i = 0; i < data.length; i++) {
+                    li += `
+                        <small class="list-group-item px-0 py-2" data-id="${data[i].id}">
+                            <span class="mdi ${icon}"></span>&nbsp;${data[i].info}
+                        </small>
+                    `;
+                }
+                let ul = `
+                    <ul class="list-group-flush p-0 m-0" id="popover">
+                        ${li}
+                    </ul>
+                `;
+                // create the dropdown popover
+                $(c).popover({
+                    delay: 0,
+                    placement: "bottom",
+                    title: t,
+                    html: true,
+                    content: ul
+                });
+                let sm = document.querySelectorAll('#popover small');
+                sm.forEach(s => {
+                    s.onclick = function() {
+                        let id = this.getAttribute('data-id');
+                    }
+                })
+            })
+    }
+    document.getElementById('get_errors').onclick = function() {
+        // retrieve notifs of type error
+        f('ERROR', this, "Errors reported today", "mdi-alert text-danger");
+    };
+    document.getElementById('get_notifs').onclick = function() {
+        // retrieve notifs of type notifs
+        f('HELP', this, "Notifications from merchants", "mdi-bell-plus text-success");
+    };
+    document.getElementById('get_messages').onclick = function() {
+        // retrieve notifs of type error
+        f('MESSAGE', this, "Messages from merchants", "mdi-message text-info");
+    };
+
+    $('#acc_options').popover({
+        delay: 0,
+        placement: "bottom",
+        title: "Account options",
+        html: true,
+        content: () => {
+            return (
+                `<div>
+                    <a href="/admin/auth/logout" class="list-group-item">Sign Out &nbsp;<span class="mdi mdi-logout-variant"></span></a>
+                 </div>
+                `
+            )
+        }
+    });
+
     /**
      * admin dashboard
      */

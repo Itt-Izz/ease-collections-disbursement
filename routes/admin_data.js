@@ -193,6 +193,13 @@ router.get('/merchantsDetails', (req, res) => {
     data.admin.retrieveAllMerchants(req, res);
 });
 
+router.get('/notifications/:type', (req, res) => {
+    /*
+     * get notifications by type
+     */
+    data.admin.retrieveNotifsByType(req, res);
+})
+
 
 // expose router to server
 module.exports = router;

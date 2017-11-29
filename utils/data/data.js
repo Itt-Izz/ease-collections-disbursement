@@ -552,7 +552,7 @@ exports.admin = {
      * count errors reported today
      */
     retrieveErrorsToday: (req, res) => {
-        database.conn.query('select count(notif_type) count from notifs where DATE(date) = CURDATE() and status=0', (err, result) => {
+        database.conn.query(`select count(notif_type) count from notifs where DATE(date) = CURDATE() and status=0 and notif_type='ERROR'`, (err, result) => {
             if (err) throw new Error(err);
             res.end(JSON.stringify(result));
         })
@@ -562,6 +562,16 @@ exports.admin = {
      */
     retrieveAllMerchants: (req, res) => {
         database.conn.query('select * from merchants', (err, result) => {
+            if (err) throw new Error(err);
+            res.end(JSON.stringify(result));
+        })
+    },
+    /**
+     * get notifications by type
+     */
+    retrieveNotifsByType: (req, res) => {
+        let type = req.params.type;
+        database.conn.query(`select * from notifs where notif_type = ${database.mysql.escape(type)} and status=0`, (err, result) => {
             if (err) throw new Error(err);
             res.end(JSON.stringify(result));
         })
