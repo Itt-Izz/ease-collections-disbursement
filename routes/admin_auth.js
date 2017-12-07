@@ -17,7 +17,7 @@ router.get('/dashboard', (req, res) => {
     /*
      * render the dashboard
      */
-    console.log(req.app.locals.code)
+
     res.render('admin/dashboard.html');
 })
 

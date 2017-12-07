@@ -6,7 +6,7 @@
         let auth_form_input = new FormData(auth_form).entries();
         let auth_form_obj = Object.assign(...Array.from(auth_form_input, ([x, y]) => ({
             [x]: y
-        })));
+        })))
 
         // request login credentials
         fetch('/auth/login', {
@@ -19,9 +19,16 @@
             .then((res) => res.json())
             .then((data) => {
                 // use the data
-                for (let i = 0; i < data.length; i++) {
-                    console.log(data[i].name);
+                if (data.message == 'empty_query') {
+                    console.log('empty')
                 }
-            });
-    });
-})(); 
+                if (data.message == 'unauthorized') {
+                    console.log('unauthorized')
+                }
+                if (data.message == 'authorized') {
+                    console.log(data)
+                    top.location.href = 'https://www.google.com'
+                }
+            })
+    })
+})()

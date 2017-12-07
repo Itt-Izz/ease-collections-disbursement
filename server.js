@@ -6,6 +6,7 @@ const session = require('express-session')
 const port = process.env.PORT | 3000;
 const app = express();
 
+
 let allowCORS = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST');
@@ -22,8 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(allowCORS);
 app.use(session({
-    secret: "a4yhsg6729hjsteh",
-    resave: true,
+    secret: "a4yhsg6729hjsteh678ehbnfjkj9i3yedgvchbnue",
+    resave: false,
     saveUninitialized: true
 }));
 

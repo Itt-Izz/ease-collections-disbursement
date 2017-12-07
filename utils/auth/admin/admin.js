@@ -2,9 +2,11 @@ const database = require('../../database/dbconfig');
 const bcrypt = require('bcrypt');
 const sms = require('../../includes/sms');
 
-let auth = {
+module.exports = {
     /**
-     * authenticate through login
+     * `authenticate through login`
+     * @param {Request} req
+     * @param {Response} res
      */
     requestAuthentication: (req, res) => {
         let cred = {
@@ -12,18 +14,20 @@ let auth = {
             auth_pwd: req.body.auth_pwd
         }
         database.conn.query(`select * from admin where code = ${database.mysql.escape(cred.auth_code)} and password=${database.mysql.escape(cred.auth_pwd)}`, (err, result) => {
-            if (err) throw new Error(err);
+            if (err) throw new Error(err)
             if (result.length < 1) {
-                res.end(JSON.stringify({ message: "failed" }));
+                res.end(JSON.stringify({ message: "failed" }))
             } else if (result.length == 1) {
                 // set sessions
-                req.app.locals.code = result[0].code;
-                res.end(JSON.stringify({ message: "authenticated" }));
+                req.session.code = result[0].code
+                res.end(JSON.stringify({ message: "authenticated" }))
             }
         })
     },
     /**
-     * register merchant, send merchant code and login password
+     * `register merchant, send merchant code and login password`
+     * @param {Request} req
+     * @param {Response} res
      */
     registerMerchant: (req, res) => {
         let pwdHash = ((new Date % 5e8).toString(36)).toUpperCase()
@@ -59,7 +63,9 @@ let auth = {
         })
     },
     /**
-     * recover merchant password
+     * `recover merchant password`
+     * @param {Request} req
+     * @param {Response} res
      */
     recoverMerchantPwd: (req, res) => {
         let obj = JSON.parse(req.params.obj);
@@ -76,7 +82,7 @@ let auth = {
                 sms.sendMessage(obj.phone, `New password: ${pwd}`, (response) => {
                     if (response.code == 'EAI_AGAIN') {
                         // network problem and message could not be sent
-                        res.end(JSON.stringify({ 'message': 'network_problem' }))
+                        res.end(JSON.stringify({ message: "network_problem" }))
                     } else {
                         /*
                          * do a database update and check the number of affectedRows
@@ -85,7 +91,7 @@ let auth = {
                             if (err) throw new Error(err);
                             if (result.affectedRows == 1) {
                                 // end operation
-                                res.end(JSON.stringify({ 'message': 'success' }))
+                                res.end(JSON.stringify({ message: "success" }))
                             } else {
                                 res.end(JSON.stringify({ message: "error" }))
                             }
@@ -98,5 +104,3 @@ let auth = {
         })
     }
 }
-
-module.exports = auth;
