@@ -1,5 +1,3 @@
-// We need this to build our post string
-
 let querystring = require('querystring');
 let https = require('https');
 let username = 'username';
