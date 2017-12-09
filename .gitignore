@@ -2,5 +2,6 @@ node_modules/
 mpesa/
 db.sql
 collections.sql
+county_ps_.sql
 developer.txt
 package-lock.json
