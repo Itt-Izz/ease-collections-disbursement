@@ -2,8 +2,8 @@
 
 let querystring = require('querystring');
 let https = require('https');
-let username = 'danny';
-let apikey = 'e1fa9c6dea495228dfa3a1d3abcb02de63ee84b32ab332961bd4a137b3d3afe5';
+let username = 'username';
+let apikey = 'e1fa9c6dea495228dfa3a1d3abcb02de63ee84b32ab332961bd4a137b3d3afe5danny';
 
 exports.sendMessage = (dest, msg, c) => {
     let to = dest;
