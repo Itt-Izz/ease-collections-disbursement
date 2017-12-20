@@ -1,13 +1,7 @@
 (() => {
     /*
      * Author: Danny Sofftie
-     * @params m-menu toggler
-     *      c-close button
-     *      d-dashboard content
-     *      s-side navigation
-     *      r-request collection button
-     *      a-add members button
-     *      da-data container element
+     * @params
      *      c_l-collections link
      *      p_t-pending transfers link
      *      r_m-recent members link
@@ -160,4 +154,30 @@
         document.getElementById('col_length').innerHTML = localStorage.length;
         document.getElementById('pend_len').innerHTML = localStorage.length;
     }, 2000)
+
+    // read cookies to update merchant code in dashboard
+    /**
+     * ("i3udhw8", _encCode, 0.5)
+       ("i4udhsy", _encName, 0.5)
+       ("i5udhwrs", _encPhone, 0.5)
+     */
+    let mr = document.querySelector('.navbar-brand')
+    let ck = decodeURIComponent(document.cookie).split(";")
+
+    function getCookie(ckName) {
+        var name = ckName + "="
+        for (var i = 0; i < ck.length; i++) {
+            var c = ck[i]
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1)
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length)
+            }
+        }
+        return "";
+    }
+
+    mr.innerHTML = `Merchant: ${window.atob(getCookie('i4udhsy'))} Code: ${window.atob(getCookie('i3udhw8'))} `
+
 })();

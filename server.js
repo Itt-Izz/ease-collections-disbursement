@@ -2,7 +2,7 @@ const http = require('http')
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
-const port = process.env.PORT | 3000
+const port = process.env.PORT || 3000
 const app = express()
 const session = require('./utils/session')
 

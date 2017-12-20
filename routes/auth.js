@@ -14,17 +14,11 @@ let data = require('../utils/data/data');
 router.post('/login', (req, res) => {
     // forward to the login module
     auth.loginRequest(req, (status) => {
-        status = JSON.parse(status)
-        if (status.message == 'authorized') {
-            res.redirect('/auth/dashboard')
-        }
-        if (status.message == 'unauthorized') {
-            res.redirect('/?auth-failed')
-        }
-        if (status.message == 'empty_query') {
-            res.redirect('/?empty-query')
-        }
-    });
+        res.end(JSON.stringify({
+            message: JSON.parse(status).message,
+            credentials: session.getSess(req.ip, cred => cred)
+        }))
+    })
 })
 
 router.get('/dashboard', (req, res) => {
