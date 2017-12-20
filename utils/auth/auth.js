@@ -3,6 +3,7 @@ const database = require('../database/dbconfig')
 const crypto = require('crypto')
 const sms = require('../includes/sms')
 const bcrypt = require('bcrypt')
+const session = require('../session')
 
 /**
  * 
@@ -14,10 +15,10 @@ module.exports = {
     /**
      * `merchant login request`
      * @param {Request} req request object
-     * @param {Response} res response object
+     * @param {Function} callback callback function
      * @returns {*}
      */
-    loginRequest: (req, res) => {
+    loginRequest: (req, callback) => {
         database.conn.query(`select * from merchants where merch_code=${database.mysql.escape(req.body.merchant_code)}`, (err, results) => {
             if (err) throw new Error(err)
                 /*
@@ -27,21 +28,22 @@ module.exports = {
                 if (bcrypt.compareSync(req.body.password, results[0].merch_password)) {
 
                     // authorized, set session
+                    session.init(req.ip, {
+                        merchant: {
+                            merchant_name: results[0].merch_fname,
+                            merchant_code: results[0].merch_code,
+                            merch_phone: results[0].merch_phone
+                        }
+                    })
 
-                    req.session.merchant = {
-                        merchant_name: results[0].merch_fname,
-                        merchant_code: results[0].merch_code,
-                        merch_phone: results[0].merch_phone
-                    }
-                    console.log(req.session)
-                    res.end(JSON.stringify({ message: 'authenticated' }))
+                    return callback(JSON.stringify({ message: 'authorized' }))
                 } else {
 
                     // denied access
-                    res.end(JSON.stringify({ message: 'unauthorized' }))
+                    return callback(JSON.stringify({ message: 'unauthorized' }))
                 }
             } else {
-                res.end(JSON.stringify({ message: 'empty_query' }))
+                return callback(JSON.stringify({ message: 'empty_query' }))
             }
         })
     },
@@ -104,7 +106,7 @@ module.exports = {
         })
     },
     /**
-     * `verify client access to their mobile phone` 
+     * `verify client access to their mobile phone`  
      * updates database status for authorization and authentication
      * @param {Request} req request body
      * @param {Response} res response object

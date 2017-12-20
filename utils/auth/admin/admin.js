@@ -80,6 +80,7 @@ module.exports = {
             if (results.length > 0) {
                 // send sms and update database for the new password
                 sms.sendMessage(obj.phone, `New password: ${pwd}`, (response) => {
+                    console.log(response)
                     if (response.code == 'EAI_AGAIN') {
                         // network problem and message could not be sent
                         res.end(JSON.stringify({ message: "network_problem" }))
