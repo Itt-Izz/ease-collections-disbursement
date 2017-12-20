@@ -36,13 +36,10 @@ router.get('/dashboard', (req, res) => {
 })
 
 router.get('/request_collection', (req, res) => {
-    console.log(session.own)
-
     // send data entry file
     res.render('data_entry.html')
 })
 router.get('/add_members', (req, res) => {
-    console.log(session.own)
     res.render('add_member.html')
 })
 
@@ -73,7 +70,6 @@ router.get('/logout', (req, res) => {
             res.redirect('/')
         }
     })
-    console.log(session.own)
 });
 
 

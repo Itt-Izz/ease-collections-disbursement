@@ -34,21 +34,18 @@ http.createServer(app).listen(port, () => {
 
 
 app.get('/', (req, res) => {
-    // session.initialize.forEach(obj => {
-    //     if (obj.ipAddrr == req.ip) {
-    //         res.redirect('/auth/dashboard')
-    //     } else {
-    //         res.render('auth.html')
-    //     }
-    // })
-    res.render('auth.html')
+    if (session.own.find(obj => obj.ipAddrr === req.ip)) {
+        res.redirect('/auth/dashboard')
+    } else {
+        res.render('auth.html')
+    }
 })
 
 app.get('/admin', (req, res) => {
-    if (!req.session.admin) {
-        res.render('admin/auth.html')
-    } else {
+    if (session.own.find(obj => obj.aIpAddrr === req.ip)) {
         res.redirect('/admin/auth/dashboard')
+    } else {
+        res.render('admin/auth.html')
     }
 });
 

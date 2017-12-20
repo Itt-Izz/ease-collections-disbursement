@@ -17,7 +17,10 @@ class Session {
     }
 
     /**
+     * 
      * uses the ip address to maintain sessions
+     * @param ip {string} ip address
+     * @param params {Object} session variables
      */
     init(ip, params) {
         // check if there's a similar saved session
