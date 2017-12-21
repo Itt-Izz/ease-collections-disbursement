@@ -8,6 +8,8 @@ const today = parseInt((new Date().getDay() == 0) ? 7 : new Date().getDay());
 exports.merchant = {
     /**
      * retrieve defaulters
+     * @param {Request} req
+     * @param {Response} res
      */
     retrieveDefaulters: (req, res) => {
 
@@ -25,6 +27,8 @@ exports.merchant = {
     },
     /**
      * retrieve row values by their corresponding phone numbers as data-id
+     * @param {Request} req
+     * @param {Response} res
      */
     requestValueByRow: (req, res) => {
         // check collections for specific client and populate the input
@@ -38,6 +42,8 @@ exports.merchant = {
     /**
      * retrieves specific members that match the search
      * criteria
+     * @param {Request} req
+     * @param {Response} res
      */
     retrieveSpecific: (req, res) => {
         database.conn.query(`select * from clients where phone like '%${(req.body.q).substr(1,15)}%' or id_number like '%${req.body.q}%' or first_name like '%${req.body.q}%'`, (err, results) => {
@@ -78,6 +84,8 @@ exports.merchant = {
     /**
      * retrieves new members, which have been added/joined,
      * in the past one week
+     * @param {Request} req
+     * @param {Response} res
      */
     retrieveNewMembers: (req, res) => {
         database.conn.query(`select * from clients where date_joined >= date_add(curdate(),interval -7 day)`, (err, results) => {
@@ -118,6 +126,8 @@ exports.merchant = {
     /**
      * retrieves regions to be used,
      * when entering new members/clients to database
+     * @param {Request} req
+     * @param {Response} res
      */
     retrieveRegions: (req, res) => {
         database.conn.query(`select * from regions`, (err, results) => {
@@ -126,21 +136,18 @@ exports.merchant = {
         })
     },
     /**
-     * submit collections to database,
-     * future -> allow only one instance of entering collections,
-     * or client side validation :
-     * **allow data entry between specific period of time**
-     * for accuracy and integrity
+     * submit collections to database, require merchant submission code
+     * @param {Request} req
+     * @param {Response} res
      */
     submitColls: (req, res) => {
         database.conn.query(`select * from merchants where merch_code = ${database.mysql.escape(req.body[0])}`, (err, results) => {
-            if (err) throw new Error(err);
+            if (err) throw new Error(err)
             if (results.length > 0) {
-
                 for (let i = 1; i < req.body.length; i++) {
                     // check if todays collections for i client exist, update if true, else make an insert
                     database.conn.query(`select * from collections where cl_phone= ${database.mysql.escape(req.body[i].cl_phone)} and server_date= CURDATE()`, (er, rows) => {
-                        if (er) throw new Error(er);
+                        if (er) throw new Error(er)
                         if (rows.length > 0) {
                             // pick amount, sum with incoming amount and update database
                             for (let j = 0; j < rows.length; j++) {
@@ -148,34 +155,36 @@ exports.merchant = {
                                 let sql = `update collections set cl_amount= ${curr_amount} where cl_phone= ${database.mysql.escape(req.body[i].cl_phone)} and cl_merch_id = ${database.mysql.escape(req.body[0])}`;
                                 // update collection
                                 database.conn.query(sql, (errr, updRes) => {
-                                    if (errr) throw new Error(errr);
-                                });
+                                    if (errr) throw new Error(errr)
+                                })
                             }
 
                         } else {
                             // do a CLEAN AND FRESH insert
                             database.conn.query(`insert into collections set ?`, req.body[i], (errrr, insRes) => {
-                                if (errrr) throw new Error(errrr);
+                                if (errrr) throw new Error(errrr)
                             })
                         }
                     })
                 }
-                res.end(JSON.stringify({ 'message': 'verified' }));
+                res.end(JSON.stringify({ 'message': 'verified' }))
             } else {
                 /*
                  * WRONG MERCHANT CODE GIVEN
                  */
-                res.end(JSON.stringify({ 'message': 'wrong_code' }));
+                res.end(JSON.stringify({ 'message': 'wrong_code' }))
             }
         })
     },
     /**
      * retrieves all clients/members and sends the response as html
+     * @param {Request} req
+     * @param {Response} res
      */
     retrieveClients: (req, res) => {
         database.conn.query(`select * from clients`, (err, results) => {
-            if (err) throw new Error(err);
-            let rows = '';
+            if (err) throw new Error(err)
+            let rows = ''
             for (let i = 0; i < results.length; i++) {
                 rows += `
                 <tr data-id='${results[i].phone}' data-name='${results[i].first_name} ${results[i].last_name}' data-rep='${results[i].id}'>
@@ -208,6 +217,8 @@ exports.merchant = {
 exports.admin = {
     /**
      * retrieve notifications, a count, or specific notification as per the request
+     * @param {Request} req
+     * @param {Response} res
      */
     retrieveNotifs: (req, res) => {
         if (req.params.type == 'count') {
@@ -226,6 +237,8 @@ exports.admin = {
     },
     /**
      * retrieve today's collections count by sub-regions
+     * @param {Request} req
+     * @param {Response} res
      */
     retrieveTodayColls: (req, res) => {
         database.conn.query(`

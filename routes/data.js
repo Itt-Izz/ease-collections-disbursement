@@ -45,14 +45,14 @@ router.post('/post_colls', (req, res) => {
     /*
      * handle and errors, post to database, and send feedback
      */
-    data.merchant.submitColls(req, res);
+    data.merchant.submitColls(req, res)
 });
 
 router.get('/new_members', (req, res) => {
     /*
      * service new members request
      */
-    data.merchant.retrieveNewMembers(req, res);
+    data.merchant.retrieveNewMembers(req, res)
 });
 
 router.post('/member_info', (req, res) => {

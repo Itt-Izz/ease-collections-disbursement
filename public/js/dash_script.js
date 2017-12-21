@@ -25,7 +25,9 @@
     let r_p = document.getElementById('re_S')
 
     // refresh window
-    document.getElementById('refresh_icon').onclick = () => { window.location.reload(true) };
+    document.getElementById('refresh_icon').onclick = () => {
+        window.location.reload(true)
+    };
 
     // collapse side menu
     c.onclick = (e) => {
@@ -43,7 +45,7 @@
     };
     // side navigation customization
     let si = Array.from(document.getElementsByClassName('list-group-item'))
-    si.forEach(function(elem) {
+    si.forEach(function (elem) {
 
         elem.onpointerenter = (e) => {
             elem.classList.remove('list-group-item-info');
@@ -68,7 +70,7 @@
             fetch(url)
                 .then((res) => res.text())
                 .then((data) => {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         let script = document.createElement('script')
                         script.type = 'text/javascript'
                         script.async = true
@@ -82,7 +84,7 @@
             fetch(url)
                 .then((res) => res.text())
                 .then((data) => {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         da.innerHTML = data;
                     }, 10);
                 });
@@ -162,12 +164,12 @@
        ("i5udhwrs", _encPhone, 0.5)
      */
     let mr = document.querySelector('.navbar-brand')
-    let ck = decodeURIComponent(document.cookie).split(";")
+    let ckk = decodeURIComponent(document.cookie).split(";")
 
     function getCookie(ckName) {
         var name = ckName + "="
-        for (var i = 0; i < ck.length; i++) {
-            var c = ck[i]
+        for (var i = 0; i < ckk.length; i++) {
+            var c = ckk[i]
             while (c.charAt(0) == ' ') {
                 c = c.substring(1)
             }
