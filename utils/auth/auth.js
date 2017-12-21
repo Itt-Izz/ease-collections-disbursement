@@ -32,7 +32,8 @@ module.exports = {
                         merchant: {
                             merchant_name: results[0].merch_fname,
                             merchant_code: results[0].merch_code,
-                            merch_phone: results[0].merch_phone
+                            merch_phone: results[0].merch_phone,
+                            region_code: results[0].region_code
                         }
                     })
 

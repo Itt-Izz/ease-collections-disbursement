@@ -45,7 +45,7 @@
     };
     // side navigation customization
     let si = Array.from(document.getElementsByClassName('list-group-item'))
-    si.forEach(function (elem) {
+    si.forEach(function(elem) {
 
         elem.onpointerenter = (e) => {
             elem.classList.remove('list-group-item-info');
@@ -70,7 +70,7 @@
             fetch(url)
                 .then((res) => res.text())
                 .then((data) => {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         let script = document.createElement('script')
                         script.type = 'text/javascript'
                         script.async = true
@@ -84,7 +84,7 @@
             fetch(url)
                 .then((res) => res.text())
                 .then((data) => {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         da.innerHTML = data;
                     }, 10);
                 });
@@ -180,6 +180,6 @@
         return "";
     }
 
-    mr.innerHTML = `Merchant: ${window.atob(getCookie('i4udhsy'))} Code: ${window.atob(getCookie('i3udhw8'))} `
+    mr.innerHTML = `Merchant: ${window.atob(getCookie('i3udhw8'))} `
 
 })();

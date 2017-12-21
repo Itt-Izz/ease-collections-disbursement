@@ -1,9 +1,10 @@
 /*
  * response to data requests will be handled here
  */
-const fs = require('fs');
-const database = require('../database/dbconfig');
-const today = parseInt((new Date().getDay() == 0) ? 7 : new Date().getDay());
+const fs = require('fs')
+const database = require('../database/dbconfig')
+const today = parseInt((new Date().getDay() == 0) ? 7 : new Date().getDay())
+const session = require('../session')
 
 exports.merchant = {
     /**
@@ -177,12 +178,17 @@ exports.merchant = {
         })
     },
     /**
-     * retrieves all clients/members and sends the response as html
+     * retrieves all clients/members and sends the response as html -
+     * merchants within the same region has access to similar client information
      * @param {Request} req
      * @param {Response} res
      */
     retrieveClients: (req, res) => {
-        database.conn.query(`select * from clients`, (err, results) => {
+        let reg_code = session.getSess(req.ip, (r) => {
+            return r.params.merchant.region_code
+        })
+
+        database.conn.query(`select * from clients where region_code=${database.mysql.escape(reg_code)}`, (err, results) => {
             if (err) throw new Error(err)
             let rows = ''
             for (let i = 0; i < results.length; i++) {
