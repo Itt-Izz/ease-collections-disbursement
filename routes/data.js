@@ -28,14 +28,14 @@ router.get('/reports', (req, res) => {
  * retrieve regions to add members to
  */
 router.get('/get_regions', (req, res) => {
-    data.merchant.retrieveRegions(req, res);
+    data.merchant.retrieveRegions(req, res)
 })
 
 /*
  * retrieve all clients
  */
 router.get('/client_list', (req, res) => {
-    data.merchant.retrieveClients(req, res);
+    data.merchant.retrieveClients(req, res)
 });
 
 /*
@@ -59,21 +59,21 @@ router.post('/member_info', (req, res) => {
     /*
      * specific member info request
      */
-    data.merchant.retrieveSpecific(req, res);
+    data.merchant.retrieveSpecific(req, res)
 })
 
 router.post('/requestValueByRow', (req, res) => {
     /*
      * request row values
      */
-    data.merchant.requestValueByRow(req, res);
+    data.merchant.requestValueByRow(req, res)
 })
 
 router.get('/getdefaulters/:period/:q', (req, res) => {
     /*
      * obtain defaulters
      */
-    data.merchant.retrieveDefaulters(req, res);
+    data.merchant.retrieveDefaulters(req, res)
 });
 
 // EXPOSE ROUTER TO THE SERVER
