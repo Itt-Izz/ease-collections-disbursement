@@ -39,8 +39,8 @@ router.get('/add_members', (req, res) => {
 
 router.get('/get_regions', (req, res) => {
     /*
-        perform the requested operation to get all the regions available in the database
-    */
+     * perform the requested operation to get all the regions available in the database
+     */
 })
 
 router.post('/request_membership', (req, res) => {

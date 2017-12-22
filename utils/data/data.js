@@ -6,6 +6,19 @@ const database = require('../database/dbconfig')
 const today = parseInt((new Date().getDay() == 0) ? 7 : new Date().getDay())
 const session = require('../session')
 
+/**
+ * 
+ * top level database query function
+ * @param {string} sql
+ * @param {Function} callback
+ */
+function queryDatabase(sql, callback) {
+    database.conn.query(sql, (err, results) => {
+        if (err) return callback(err)
+        return callback(results)
+    })
+}
+
 exports.merchant = {
     /**
      * retrieve defaulters
@@ -139,7 +152,7 @@ exports.merchant = {
     /**
      * submit collections to database, require merchant submission code
      * @param {Request} req
-     * @param {Response} res
+     * @param {Response} res 
      */
     submitColls: (req, res) => {
         database.conn.query(`select * from merchants where merch_code = ${database.mysql.escape(req.body[0])}`, (err, results) => {
@@ -147,13 +160,13 @@ exports.merchant = {
             if (results.length > 0) {
                 for (let i = 1; i < req.body.length; i++) {
                     // check if todays collections for i client exist, update if true, else make an insert
-                    database.conn.query(`select * from collections where cl_phone= ${database.mysql.escape(req.body[i].cl_phone)} and server_date= CURDATE()`, (er, rows) => {
+                    database.conn.query(`select * from collections where cl_phone= ${database.mysql.escape(req.body[i].cl_phone)} and server_date = CURDATE()`, (er, rows) => {
                         if (er) throw new Error(er)
                         if (rows.length > 0) {
                             // pick amount, sum with incoming amount and update database
                             for (let j = 0; j < rows.length; j++) {
-                                let curr_amount = parseFloat(rows[j].cl_amount) + parseFloat(req.body[i].cl_amount);
-                                let sql = `update collections set cl_amount= ${curr_amount} where cl_phone= ${database.mysql.escape(req.body[i].cl_phone)} and cl_merch_id = ${database.mysql.escape(req.body[0])}`;
+                                let curr_amount = parseFloat(rows[j].cl_amount) + parseFloat(req.body[i].cl_amount)
+                                let sql = `update collections set cl_amount= ${curr_amount} where cl_phone= ${database.mysql.escape(req.body[i].cl_phone)} and cl_merch_id = ${database.mysql.escape(req.body[0])} and server_date = CURDATE()`;
                                 // update collection
                                 database.conn.query(sql, (errr, updRes) => {
                                     if (errr) throw new Error(errr)
@@ -168,12 +181,16 @@ exports.merchant = {
                         }
                     })
                 }
-                res.end(JSON.stringify({ 'message': 'verified' }))
+                res.end(JSON.stringify({
+                    'message': 'verified'
+                }))
             } else {
                 /*
                  * WRONG MERCHANT CODE GIVEN
                  */
-                res.end(JSON.stringify({ 'message': 'wrong_code' }))
+                res.end(JSON.stringify({
+                    'message': 'wrong_code'
+                }))
             }
         })
     },
@@ -215,6 +232,43 @@ exports.merchant = {
             }
             res.set('Content-Type', 'text/html');
             res.status(200).send(rows);
+        })
+    },
+    /**
+     * previous month's collections / 30 days
+     * @param {Request} req
+     * @param {Response} res
+     */
+    retrievePreviousMonthCol: (req, res) => {
+        let merch_code = session.getSess(req.ip, (r) => {
+            return r.params.merchant.merchant_code
+        })
+
+        database.conn.query(`
+        SELECT
+             SUM(cl_amount) amount,c.server_date date 
+        FROM
+             collections c INNER JOIN merchants m 
+        ON 
+            c.cl_merch_id=m.merch_code 
+        WHERE 
+            DATE(server_date) >= DATE_SUB(CURDATE(),INTERVAL 30 DAY) AND cl_merch_id=${database.mysql.escape(merch_code)} GROUP BY date
+        `, (err, results) => {
+            if (err) throw new Error(err)
+
+            res.end(JSON.stringify(results))
+        })
+    },
+    /**
+     * collections for specific client upon request
+     * @param {Request} req
+     * @param {Response} res
+     */
+    retrieveClientData: (req, res) => {
+        let phone = req.body.q
+        queryDatabase(`select * from collections where cl_phone like '%${phone.substr(1)}%' 
+        and date(server_date)>=date_sub(curdate(), interval 30 day)`, (data) => {
+            res.end(JSON.stringify(data))
         })
     }
 };
@@ -451,11 +505,15 @@ exports.admin = {
         database.conn.query(`select * from constituencies where constituency_name=${database.mysql.escape(regionData.constituency_name)}`, (err, rows) => {
             if (err) throw new Error(err)
             if (rows.length > 0) {
-                res.end(JSON.stringify({ 'message': 'region_exists' }));
+                res.end(JSON.stringify({
+                    'message': 'region_exists'
+                }));
             } else {
                 database.conn.query(`insert into constituencies set ?`, regionData, (err, results) => {
                     if (err) throw new Error(err)
-                    res.end(JSON.stringify({ 'message': 'success' }));
+                    res.end(JSON.stringify({
+                        'message': 'success'
+                    }));
                 })
             }
         })
@@ -482,11 +540,15 @@ exports.admin = {
         database.conn.query(`select * from regions where region_name=${database.mysql.escape(regionData.region_name)}`, (err, rows) => {
             if (err) throw new Error(err)
             if (rows.length > 0) {
-                res.end(JSON.stringify({ 'message': 'region_exists' }));
+                res.end(JSON.stringify({
+                    'message': 'region_exists'
+                }));
             } else {
                 database.conn.query(`insert into regions set ?`, regionData, (err, results) => {
                     if (err) throw new Error(err)
-                    res.end(JSON.stringify({ 'message': 'success' }));
+                    res.end(JSON.stringify({
+                        'message': 'success'
+                    }));
                 })
             }
         })

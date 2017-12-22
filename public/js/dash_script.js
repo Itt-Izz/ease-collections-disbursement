@@ -44,18 +44,25 @@
         m.style.display = 'none'
     };
     // side navigation customization
-    let si = Array.from(document.getElementsByClassName('list-group-item'))
+    let si = document.querySelectorAll('li.list-group-item')
     si.forEach(function(elem) {
 
-        elem.onpointerenter = (e) => {
-            elem.classList.remove('list-group-item-info');
+        elem.onpointerenter = function(e) {
+            elem.classList.remove('list-group-item-info')
             elem.classList.add('list-group-item-secondary')
         }
-        elem.onpointerleave = (e) => {
-            elem.classList.remove('list-group-item-secondary');
-            elem.classList.add('list-group-item-info');
+        elem.onpointerleave = function(e) {
+            elem.classList.remove('list-group-item-secondary')
+            elem.classList.add('list-group-item-info')
         }
-    });
+
+        elem.addEventListener('click', function() {
+            si.forEach(el => {
+                el.classList.remove('bg-info', 'text-white')
+            })
+            this.classList.add('bg-info', 'text-white')
+        })
+    })
     let preloader = `<div id="preloader_cont" class="pt-5">
                         <div id="preloader">
                             <img src="/images/processing.gif" alt="preloader">
@@ -149,7 +156,7 @@
          *    *************
          * also allow to visualize data of specific farmer
          */
-        fetch_htm('/data/reports', '?graphical--v-data', '')
+        fetch_htm('/data/reports', '?graphical--v-data', 'reports')
     };
 
     setInterval(() => {

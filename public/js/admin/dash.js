@@ -54,26 +54,26 @@
                     title: t,
                     html: true,
                     content: ul
-                });
-                let sm = document.querySelectorAll('#popover small');
+                })
+                let sm = document.querySelectorAll('#popover small')
                 sm.forEach(s => {
                     s.onclick = function() {
-                        let id = this.getAttribute('data-id');
+                        let id = this.getAttribute('data-id')
                     }
                 })
             })
     }
     document.getElementById('get_errors').onclick = function() {
         // retrieve notifs of type error
-        f('ERROR', this, "Errors reported today", "mdi-alert text-danger");
+        f('ERROR', this, "Errors reported today", "mdi-alert text-danger")
     };
     document.getElementById('get_notifs').onclick = function() {
         // retrieve notifs of type notifs
-        f('HELP', this, "Notifications from merchants", "mdi-bell-plus text-success");
+        f('HELP', this, "Notifications from merchants", "mdi-bell-plus text-success")
     };
     document.getElementById('get_messages').onclick = function() {
         // retrieve notifs of type error
-        f('MESSAGE', this, "Messages from merchants", "mdi-message text-info");
+        f('MESSAGE', this, "Messages from merchants", "mdi-message text-info")
     };
 
     $('#acc_options').popover({

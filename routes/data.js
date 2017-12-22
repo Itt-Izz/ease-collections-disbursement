@@ -36,7 +36,7 @@ router.get('/get_regions', (req, res) => {
  */
 router.get('/client_list', (req, res) => {
     data.merchant.retrieveClients(req, res)
-});
+})
 
 /*
  * receive and process collections
@@ -46,14 +46,14 @@ router.post('/post_colls', (req, res) => {
      * handle and errors, post to database, and send feedback
      */
     data.merchant.submitColls(req, res)
-});
+})
 
 router.get('/new_members', (req, res) => {
     /*
      * service new members request
      */
     data.merchant.retrieveNewMembers(req, res)
-});
+})
 
 router.post('/member_info', (req, res) => {
     /*
@@ -74,7 +74,23 @@ router.get('/getdefaulters/:period/:q', (req, res) => {
      * obtain defaulters
      */
     data.merchant.retrieveDefaulters(req, res)
-});
+})
+
+router.get('/merchantCollections', (req, res) => {
+    /*
+     * get data specific to req.ip for previous 30 days
+     */
+    data.merchant.retrievePreviousMonthCol(req, res)
+})
+
+router.post('/qRequestChartData', (req, res) => {
+    /*
+     * get spcific client data to graph
+     */
+    data.merchant.retrieveClientData(req, res)
+})
+
+
 
 // EXPOSE ROUTER TO THE SERVER
-module.exports = router;
+module.exports = router

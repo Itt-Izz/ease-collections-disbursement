@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/materialdesignicons.css">
     <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/animate.css">
 </head>
 
 <body>
@@ -42,9 +43,9 @@
                     <li class="list-group-item list-group-item-info d-flex" id="re_S">
                         <span><span class="mdi mdi-chart-bar"></span>&nbsp; Reports</span>
                     </li>
-                    <li class="list-group-item list-group-item-info d-flex" id="logout">
+                    <a class="list-group-item list-group-item-info d-flex" href="/auth/logout" id="logout">
                         <span><span class="mdi mdi-account-convert"></span>&nbsp; Sign Out</span>
-                    </li>
+                    </a>
                 </ul>
             </div>
             <div id="bottom_footer_nav">
@@ -87,6 +88,8 @@
     <script src="/js/dataTables.bootstrap4.min.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
     <script src="/js/dash_script.js"></script>
+    <script src="/js/chartjs/Chart.min.js"></script>
+    <script src="/js/popper.js"></script>
 </body>
 
 </html>
