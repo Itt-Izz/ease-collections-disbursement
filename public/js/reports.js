@@ -116,7 +116,7 @@
                                     },
                                     onComplete: (animation) => {
                                         window.setTimeout(() => {
-                                            progress.value = 0;
+                                            progress.value = 0
                                             progText.innerText = 'Complete!'
                                         }, 1000)
                                     }

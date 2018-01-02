@@ -86,6 +86,41 @@ button {
     align-items: center;
 }
 
+#res_auth_cont {
+    display: none
+}
+
+
+/* __popover */
+
+.__popover {
+    display: none;
+}
+
+.__popover .__popovertext {
+    padding: 8px;
+    width: 220px;
+    text-align: center;
+    border-radius: 2px;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+    box-shadow: -1px 1px 10px 1px rgba(0, 0, 0, 0.3);
+    background-color: white
+}
+
+.__popover .__popovertext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+
 
 /* preloader */
 

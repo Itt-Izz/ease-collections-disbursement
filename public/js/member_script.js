@@ -1,13 +1,24 @@
 (() => {
     /*
-     *Author: DAnny Sofftie
-     *Date: Oct 26 2017
-     *@param: m contains an iterable list of all properties required during member registration
+     * Author: Danny Sofftie
+     * Date: Oct 26 2017
+     * Handle member registration and phone number verification
      */
 
-    let m = document.forms.add_m_form;
-    let _a = document.getElementById('authorization_area')
-    _a.style.display = 'none';
+    let m = document.querySelector('form#add_members')
+    let btnGrant = document.getElementById('grantbtn')
+
+    let _b = m.querySelector('button')
+    let _i = m.querySelector('input#id_number')
+    let _p = m.querySelector('input#phone')
+
+    let phoneMap = new Map()
+
+    let pop = document.querySelector('div.__popover')
+
+    let aCont = document.getElementById('res_auth_cont')
+    let app_m = document.querySelector('form#app_m')
+    let res_auth = app_m.querySelector('button#res_auth')
 
     fetch('/data/get_regions')
         .then((res) => res.json())
@@ -15,44 +26,35 @@
             for (let i = 0; i < data.length; i++) {
                 m.region_code.append(new Option(data[i].region_name, data[i].region_code))
             }
-        });
+        })
 
-    let _b = m.querySelector('button')
-    let _i = m.querySelector('input#id_number');
-    let _p = m.querySelector('input#phone')
     _i.onkeyup = () => {
         if (_i.value.trim().length < 6 || _i.value.trim().length > 8) {
             _i.classList.add('is-invalid')
-            _b.disabled = true;
+            _b.disabled = true
         } else {
             _i.classList.remove('is-invalid')
-            _b.disabled = false;
+            _b.disabled = false
         }
-    };
+    }
     _p.onkeyup = () => {
         if (_p.value.trim().length != 10) {
             _p.classList.add('is-invalid')
-            _b.disabled = true;
+            _b.disabled = true
         } else {
             _p.classList.remove('is-invalid')
-            _b.disabled = false;
+            _b.disabled = false
         }
-    };
-    let phoneMap = new Map();
-    // request membership
-    m.addEventListener('submit', (e) => {
-        e.preventDefault();
+    }
 
-        let _f = new FormData(m).entries();
-        let _j = Object.assign(...Array.from(_f, ([x, y]) => ({
+    // request membership
+    m.addEventListener('submit', function(e) {
+        e.preventDefault()
+        let _j = Object.assign(...Array.from(new FormData(this), ([x, y]) => ({
             [x]: y
-        })));
-        phoneMap.set('phone', `${_j.phone}`);
-        /* 
-         *  send the details with body as
-         *  JSON.Stringify(jsonobject)
-         *  
-         */
+        })))
+        phoneMap.set('phone', `${_j.phone}`)
+
         fetch('/auth/request_membership', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -60,27 +62,18 @@
             })
             .then((res) => res.text())
             .then((data) => {
-                /*
-                 * request complete, check message and message code
-                 * @param: error, error_code
-                 * @param: success, success_message, success_status, success_rate
-                 * as data.@param
-                 */
                 data = JSON.parse(data)
-                console.log(data)
                 if (data.message == 'registered') {
-                    _a.style.display = 'inline-block'
+                    // approve membership
+                    btnGrant.click()
                 } else {
-                    _a.style.display = 'none'
+                    // resend auth code for phone verification
+                    aCont.style.display = 'block'
                 }
             })
-    });
+    })
 
-    let app_m = document.forms.app_m;
-    let auth_code = app_m.querySelector('input')
-    let res_auth = app_m.querySelector('button#res_auth');
-    let btn_sub = app_m.querySelector('button[type="submit"]')
-    res_auth.onclick = () => {
+    res_auth.addEventListener('click', function(e) {
         /*
          * prompt server to resend the code
          */
@@ -91,26 +84,21 @@
             })
             .then(res => res.json())
             .then((data) => {
-                console.log(data);
-            });
-    };
+                console.log(data)
+            })
+    })
 
-    btn_sub.disabled = true;
-    auth_code.onkeyup = () => {
-        if (auth_code.value.trim().length < 4) {
-            btn_sub.disabled = true;
-        } else {
-            btn_sub.disabled = false;
-        }
-    };
-
-    app_m.onsubmit = (e) => {
-        e.preventDefault();
-        /*
-         * member proven identity and authorized
-         * send the auth code
-         */
-
-    }
+    // display popover for auth code verification
+    btnGrant.addEventListener('click', function(e) {
+        e = e || window.event
+        Object.assign(pop.style, {
+            display: 'block',
+            position: 'fixed',
+            'margin-top': '30px',
+            top: e.clientY + 'px',
+            left: (document.body.clientWidth - e.clientX) > 170 ?
+                e.clientX + 'px' : '87.6%'
+        })
+    })
 
 })()

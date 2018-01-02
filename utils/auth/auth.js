@@ -16,7 +16,7 @@ module.exports = {
      * `merchant login request`
      * @param {Request} req request object
      * @param {Function} callback callback function
-     * @returns {*}
+     * @returns {Function}
      */
     loginRequest: (req, callback) => {
         database.conn.query(`select * from merchants where merch_code=${database.mysql.escape(req.body.merchant_code)}`, (err, results) => {
@@ -52,10 +52,10 @@ module.exports = {
     /**
      *  `register client`
      * @param {Request} req request object
-     * @param {Response} res response object
-     * @returns {*}
+     * @param {Function} callback callback function
+     * @returns {Function}
      */
-    registerClient: (req, res) => {
+    registerClient: (req, callback) => {
         let auth_code = ((new Date() % 7e8).toString(36)).toUpperCase()
         let cred = {
             first_name: req.body.first_name,
@@ -66,25 +66,26 @@ module.exports = {
             email: req.body.email,
             auth_code: auth_code,
             auth_status: '0'
-        };
+        }
 
         // check if user exists
         database.conn.query(`select * from clients where phone= +254${(req.body.phone).slice(-9)} or id_number= ${req.body.id_number}`, (err, result) => {
             if (err) throw new Error(err);
             if (result.length > 0) {
                 // client in records
-                res.end(JSON.stringify({ 'message': 'in_records' }));
+                return callback(JSON.stringify({ 'message': 'in_records' }))
             } else {
                 // create user
                 database.conn.query('insert into clients set ? ', cred, (err, rows) => {
-                    if (err) throw new Error(err);
+                    if (err) throw new Error(err)
+
                     /*
                      * send auth code to phone (req.body.phone)
                      */
-                    res.end(JSON.stringify({ 'message': 'registered' }));
+                    return callback(JSON.stringify({ 'message': 'registered' }))
                 })
             }
-        });
+        })
     },
     /**
      * `resend auth code if client not receive`

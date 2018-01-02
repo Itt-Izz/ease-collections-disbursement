@@ -10,7 +10,7 @@
             if (count >= 100) {
                 clearInterval(timer);
                 pg.value = 0;
-                document.getElementById('pg_cont').style.display = 'none';
+                document.getElementById('pg_cont').style.display = 'none'
             }
         }, 35)
     };
@@ -37,7 +37,7 @@
         autoclose: true,
         startDate: '-1d',
         endDate: '+1d'
-    });
+    })
 
     /*
      * populate table with clients information
@@ -65,8 +65,12 @@
 
                 fetch('/data/requestValueByRow', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 'phone': rowPhone })
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'phone': rowPhone
+                        })
                     })
                     .then(resp => resp.json())
                     .then(rowValues => {
@@ -80,18 +84,21 @@
         });
 
     function r() {
-        /*
-         * A DEAD SIMPLE AND STUPID WAY TO TRICK DATATABLES INITIALIZATION
-         */
         $('#data_entry_table').dataTable({
-            // datatables customization options
-        });
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "language": {
+                "search": "<strong class='text-danger'><small>Search phone number..</small></strong>"
+            }
+        })
 
-        setTimeout(function() {
-            // hide preloader
-            let preloader = document.querySelector('div#preloader_cont');
-            preloader.style.width = '0%';
-        }, 0);
+        // hide preloader
+        let preloader = document.querySelector('div#preloader_cont');
+        preloader.style.width = '0%'
+
+        document.getElementById('datepicker').focus()
 
         /*
          * write to localstorage,
@@ -163,6 +170,6 @@
                     }
                 }
             })
-        };
+        }
     }
 })();

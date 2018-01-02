@@ -47,8 +47,10 @@ router.post('/request_membership', (req, res) => {
     /*
      *  request membership and generate access token for use during authentication
      */
-    auth.registerClient(req, res)
-});
+    auth.registerClient(req, (message) => {
+        res.end(message)
+    })
+})
 
 router.post('/res_auth', (req, res) => {
     /*

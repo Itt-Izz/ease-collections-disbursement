@@ -6,16 +6,40 @@
  -->
 
 <div class="h-100" id="members_area">
+    <div class="_grant" style="position: absolute; right: 5px; top: 100px">
+        <button class="btn btn-info" id="grantbtn" title="Client access code and their phone number to authorize collections with that phone number">Grant client access <span class="mdi mdi-lock-open"></span></button>
+        <div class="__popover">
+            <div class="__popovertext">
+                <small id="infotext">info text</small>
+                <form id="grantAccess">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="mdi mdi-phone"></span></span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Phone number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="mdi mdi-lock-pattern"></span></span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Access code">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-block btn-outline-info">Authorize access &nbsp; <span class="mdi mdi-alert-circle-outline"></span></button>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="card w-50">
         <div class="card-header">
             <strong>
                 <small>After collecting farmer's details, the request will be processed within 5 minutes and the farmer will receive an access token via the mobile number provided. If this fails, you are required to repeat the process.</small>
             </strong>
+            <small><i id="regInfo" class="text-danger"></i></small>
         </div>
         <div class="card-body">
             <form name="add_m_form" id="add_members">
                 <div class="form-group row m-0 p-0">
-                    <small class="col-lg-12 col-md-12 mb-1 p-0">Full names</small>
+                    <small class="col-lg-12 col-md-12 mb-1 p-0">Full names <span class="text-danger">&ast;</span></small>
                     <div class="input-group col-lg-5 col-md-5 m-0 p-0">
                         <span class="input-group-addon">
                         <span class="mdi mdi-account"></span>
@@ -30,13 +54,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <small>Select region</small>
+                    <small>Select region <span class="text-danger">&ast;</span></small>
                     <select name="region_code" id="region_code" class="custom-select form-control">
-                        
+                        <!-- 
+                            regions and region codes will be populated dynamically
+                        -->
                     </select>
                 </div>
                 <div class="form-group">
-                    <small>Mobile number</small>
+                    <small>Mobile number <span class="text-danger">&ast;</span></small>
                     <div class="input-group">
                         <span class="input-group-addon">
                         <span class="mdi mdi-phone"></span>
@@ -45,7 +71,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <small>ID number</small>
+                    <small>ID number <span class="text-danger">&ast;</span></small>
                     <div class="input-group">
                         <span class="input-group-addon">
                          <span class="mdi mdi-numeric"></span>
@@ -68,27 +94,15 @@
             </form>
         </div>
     </div>
-    <div class="card ml-5" id="authorization_area">
+    <div class="card ml-5" id="res_auth_cont">
         <div class="card-header">
             <h6>Membership approval</h6>
         </div>
         <div class="card-body">
-            <form name="app_m">
+            <form name="app_m" id="app_m">
                 <div class="form-group">
                     <small>Member didn't get code?</small>
                     <button class="btn btn-outline-info btn-block" type="button" id="res_auth">Resend code &nbsp; <span class="mdi mdi-replay"></span></button>
-                </div>
-                <div class="form-group">
-                    <small>If member got code, input below to authorize</small>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <span class="mdi mdi-code-parentheses"></span>
-                        </span>
-                        <input type="text" name="auth_code" id="auth_code" class="form-control" placeholder="Authorization code">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-outline-info btn-block" type="submit">Authorize &nbsp; <span class="mdi mdi-auto-fix"></span></button>
                 </div>
             </form>
         </div>
