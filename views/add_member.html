@@ -10,18 +10,18 @@
         <button class="btn btn-info" id="grantbtn" title="Client access code and their phone number to authorize collections with that phone number">Grant client access <span class="mdi mdi-lock-open"></span></button>
         <div class="__popover">
             <div class="__popovertext">
-                <small id="infotext">info text</small>
+                <small id="infotext" class="text-danger"></small>
                 <form id="grantAccess">
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="mdi mdi-phone"></span></span>
-                            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control form-control-sm" placeholder="Phone number">
+                            <input required="required" type="text" id="phoneNumber" name="phoneNumber" class="form-control form-control-sm" placeholder="Phone number">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="mdi mdi-lock-pattern"></span></span>
-                            <input type="text" id="accessCode" name="accessCode" class="form-control form-control-sm" placeholder="Access code">
+                            <input required="required" type="text" id="accessCode" name="accessCode" class="form-control form-control-sm" placeholder="Access code">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-sm btn-block btn-outline-info">Authorize access &nbsp; <span class="mdi mdi-alert-circle-outline"></span></button>

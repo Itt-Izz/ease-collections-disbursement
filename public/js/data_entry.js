@@ -47,9 +47,33 @@
     fetch('/data/client_list', {
             method: 'GET'
         })
-        .then(res => res.text())
-        .then((data) => {
-            _tbody.innerHTML = data;
+        .then(res => res.json())
+        .then((results) => {
+            let rows = ''
+            for (let i = 0; i < results.length; i++) {
+                rows += `
+                    <tr data-id='${results[i].phone}' data-name='${results[i].first_name} ${results[i].last_name}' data-rep='${results[i].id}'>
+                        <td>
+                            <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" value="">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">${results[i].id}</span>
+                            </label>
+                        </td>
+                        <td>${results[i].first_name}</td>
+                        <td>0${results[i].phone.slice(-9)}</td>
+                        <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
+                        <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
+                        <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
+                        <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
+                        <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
+                        <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
+                        <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
+                    </tr>
+                `;
+            }
+            _tbody.innerHTML = rows
+
             /*
              * HAVE EACH ROW REQUEST THEIR OWN DATA TO POPULATE DAYS STARTING FROM MONDAY
              * OF EVERY CALENDAR WEEK
@@ -65,12 +89,8 @@
 
                 fetch('/data/requestValueByRow', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            'phone': rowPhone
-                        })
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 'phone': rowPhone })
                     })
                     .then(resp => resp.json())
                     .then(rowValues => {
@@ -78,10 +98,10 @@
                             if (rowValues[i] == undefined) inputQ[i].value = 0;
                             else inputQ[i].value = rowValues[i].cl_amount;
                         }
-                    });
-            }, this);
-            r();
-        });
+                    })
+            }, this)
+            r()
+        })
 
     function r() {
         $('#data_entry_table').dataTable({

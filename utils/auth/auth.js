@@ -120,14 +120,23 @@ module.exports = {
      * `verify client access to their mobile phone`  
      * updates database status for authorization and authentication
      * @param {Request} req request body
-     * @param {Response} res response object
+     * @param {Function} callback callback function
+     * @returns {Function}
      */
-    verifyClientPhoneAccess: (req, res) => {
+    verifyClientPhoneAccess: (req, callback) => {
         // take the code and update database status
-        database.conn.query(`update clients set auth_status=1 where `, (err, result) => {
+        database.conn.query(`select * from clients where phone=+254${(req.body.phoneNumber).slice(-9)} and auth_code=${database.mysql.escape(req.body.accessCode)}`, (err, result) => {
             if (err) throw new Error(err)
-            res.end(JSON.stringify({ message: 'authorized' }))
+            if (result.length > 0) {
+                database.conn.query(`update clients set auth_status=1 where phone=+254${(req.body.phoneNumber).slice(-9)}`, (err, result) => {
+                    if (err) throw new Error(err)
+                    return callback(JSON.stringify({ message: 'authorized' }))
+                })
+                return
+            }
+            return callback(JSON.stringify({ message: 'fatal_error' }))
         })
+
     }
 
 }

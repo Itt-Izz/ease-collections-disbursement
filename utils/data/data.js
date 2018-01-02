@@ -207,31 +207,8 @@ exports.merchant = {
 
         database.conn.query(`select * from clients where region_code=${database.mysql.escape(reg_code)}`, (err, results) => {
             if (err) throw new Error(err)
-            let rows = ''
-            for (let i = 0; i < results.length; i++) {
-                rows += `
-                <tr data-id='${results[i].phone}' data-name='${results[i].first_name} ${results[i].last_name}' data-rep='${results[i].id}'>
-                    <td>
-                        <label class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" value="">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">${results[i].id}</span>
-                        </label>
-                    </td>
-                    <td>${results[i].first_name}</td>
-                    <td>0${results[i].phone.slice(-9)}</td>
-                    <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
-                    <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
-                    <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
-                    <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
-                    <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
-                    <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
-                    <td><input class='form-control form-control-sm' type='text' name='data_input'/></td>
-                    </tr>
-            `;
-            }
-            res.set('Content-Type', 'text/html');
-            res.status(200).send(rows);
+
+            res.end(JSON.stringify(results))
         })
     },
     /**

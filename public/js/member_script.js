@@ -22,6 +22,7 @@
     let res_auth = app_m.querySelector('button#res_auth')
 
     let authForm = document.getElementById('grantAccess')
+    let infotext = document.getElementById('infotext')
 
     fetch('/data/get_regions')
         .then((res) => res.json())
@@ -68,7 +69,6 @@
                 if (data.message == 'registered') {
                     regInfo.innerText = 'Success. Verify to approve phone number';
                     // approve membership
-                    btnGrant.click()
                 } else if (data.message == 'in_records') {
                     regInfo.innerText = 'User exists in records'
                 } else if (data.message == 'network_problem') {
@@ -87,7 +87,7 @@
             })
             .then(res => res.json())
             .then((data) => {
-                console.log(data)
+                // resend successfull
             })
     })
 
@@ -95,24 +95,38 @@
     btnGrant.addEventListener('click', function(e) {
         e = e || window.event
 
-        authForm.querySelector('input#phoneNumber').value = phoneMap.get('phone')
-        authForm.querySelector('input#accessCode').focus()
         Object.assign(pop.style, {
             display: 'block',
             position: 'fixed',
             'margin-top': '30px',
-            top: e.clientY + 'px',
-            left: (document.body.clientWidth - e.clientX) > 170 ?
-                e.clientX + 'px' : '87.6%'
+            top: e.clientY < 10 ? '25%' : e.clientY + 'px',
+            left: (document.body.clientWidth - e.clientX) > 170 || e.clientX < 10 ?
+                e.clientX + 'px' : '86.6%'
         })
     })
 
+    document.getElementById('accessCode').addEventListener('keyup', function(e) {
+        this.value = this.value.toUpperCase()
+    })
     authForm.addEventListener('submit', function(e) {
         e.preventDefault()
         let obj = Object.assign(...Array.from(new FormData(this), ([x, y]) => ({
             [x]: y.trim()
         })))
-        console.log(obj)
+        fetch('/auth/verifyCode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(obj)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message == 'authorized') {
+                    infotext.innerText = 'Access granted!'
+                    this.reset()
+                } else {
+                    infotext.innerText = 'Wrong code or server error!'
+                }
+            })
     })
 
 })()

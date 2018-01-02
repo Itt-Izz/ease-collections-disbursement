@@ -60,6 +60,15 @@ router.post('/res_auth', (req, res) => {
         res.end(message)
     })
 })
+router.post('/verifyCode', (req, res) => {
+    /* 
+     * verify phone number
+     */
+    auth.verifyClientPhoneAccess(req, (message) => {
+        console.log(message)
+        res.end(message)
+    })
+})
 
 router.get('/logout', (req, res) => {
     // kick out the user

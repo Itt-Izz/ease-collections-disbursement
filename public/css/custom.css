@@ -95,6 +95,10 @@ button {
 
 .__popover {
     display: none;
+    position: fixed;
+    top: 23%;
+    left: 86%;
+    z-index: 2;
 }
 
 .__popover .__popovertext {

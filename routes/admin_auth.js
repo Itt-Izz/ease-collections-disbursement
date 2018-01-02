@@ -9,15 +9,15 @@ const auth = require('../utils/auth/admin/admin')
 router.post('/login', (req, res) => {
     /*
      * do a credentials verification and authenticate
+     * check if admin data exists in database, else request data
      */
     auth.requestAuthentication(req, res)
-});
+})
 
 router.get('/dashboard', (req, res) => {
     /*
      * render the dashboard
      */
-
     res.render('admin/dashboard.html')
 })
 
@@ -37,7 +37,6 @@ router.get('/recoverMerchPwd/:obj', (req, res) => {
 
 router.get('/logout', (req, res) => {
     // kick out the user
-    req.app.locals.code = undefined
     res.redirect('/admin')
 })
 
