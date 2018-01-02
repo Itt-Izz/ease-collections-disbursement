@@ -21,11 +21,13 @@
     let app_m = document.querySelector('form#app_m')
     let res_auth = app_m.querySelector('button#res_auth')
 
+    let authForm = document.getElementById('grantAccess')
+
     fetch('/data/get_regions')
         .then((res) => res.json())
         .then((data) => {
             for (let i = 0; i < data.length; i++) {
-                m.region_code.append(new Option(data[i].region_name, data[i].region_code))
+                m.region_code.append(new Option(data[i].region_name, data[i].id))
             }
         })
 
@@ -64,13 +66,13 @@
             .then((res) => res.json())
             .then((data) => {
                 if (data.message == 'registered') {
-                    regInfo.innerText = 'Success. Verify phone number'
-
+                    regInfo.innerText = 'Success. Verify to approve phone number';
                     // approve membership
                     btnGrant.click()
                 } else if (data.message == 'in_records') {
                     regInfo.innerText = 'User exists in records'
-                } else {
+                } else if (data.message == 'network_problem') {
+                    regInfo.innerText = 'Could not send verification code, resend.';
                     // resend auth code for phone verification
                     aCont.style.display = 'block'
                 }
@@ -92,6 +94,9 @@
     // display popover for auth code verification
     btnGrant.addEventListener('click', function(e) {
         e = e || window.event
+
+        authForm.querySelector('input#phoneNumber').value = phoneMap.get('phone')
+        authForm.querySelector('input#accessCode').focus()
         Object.assign(pop.style, {
             display: 'block',
             position: 'fixed',
@@ -100,6 +105,14 @@
             left: (document.body.clientWidth - e.clientX) > 170 ?
                 e.clientX + 'px' : '87.6%'
         })
+    })
+
+    authForm.addEventListener('submit', function(e) {
+        e.preventDefault()
+        let obj = Object.assign(...Array.from(new FormData(this), ([x, y]) => ({
+            [x]: y.trim()
+        })))
+        console.log(obj)
     })
 
 })()

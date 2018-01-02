@@ -39,7 +39,6 @@ module.exports = {
 
                     return callback(JSON.stringify({ message: 'authorized' }))
                 } else {
-
                     // denied access
                     return callback(JSON.stringify({ message: 'unauthorized' }))
                 }
@@ -60,7 +59,7 @@ module.exports = {
         let cred = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
-            region_code: 1,
+            region_code: req.body.region_code,
             phone: `+254${(req.body.phone).slice(-9)}`,
             id_number: req.body.id_number,
             email: req.body.email,
@@ -70,19 +69,25 @@ module.exports = {
 
         // check if user exists
         database.conn.query(`select * from clients where phone= +254${(req.body.phone).slice(-9)} or id_number= ${req.body.id_number}`, (err, result) => {
-            if (err) throw new Error(err);
+            if (err) throw new Error(err)
             if (result.length > 0) {
                 // client in records
                 return callback(JSON.stringify({ 'message': 'in_records' }))
             } else {
-                // create user
+                // create client
                 database.conn.query('insert into clients set ? ', cred, (err, rows) => {
                     if (err) throw new Error(err)
 
                     /*
                      * send auth code to phone (req.body.phone)
                      */
-                    return callback(JSON.stringify({ 'message': 'registered' }))
+                    sms.sendMessage(cred.phone, `Confirmation code: ${cred.auth_code}`, (response) => {
+                        // check the response code
+                        if (response.code == 'EAI_AGAIN') {
+                            return callback(JSON.stringify({ message: 'network_problem' }))
+                        }
+                        return callback(JSON.stringify({ message: 'registered' }))
+                    })
                 })
             }
         })
@@ -90,20 +95,24 @@ module.exports = {
     /**
      * `resend auth code if client not receive`
      * @param {Request} req request object
-     * @param {Response} res response object
+     * @param {Function} callback callback function
+     * @returns {Function}
      */
-    resendAuthCode: (req, res) => {
+    resendAuthCode: (req, callback) => {
         database.conn.query(`select auth_code from clients where phone= +254${(req.body.phone).slice(-9)}`, (err, results) => {
             if (err) throw new Error(err)
             let auth_c = results[0].auth_code
             let phone_n = `+254${(req.body.phone).slice(-9)}`
-                /*
-                 * call the api to send auth code
-                 */
-            sms.sendMessage(phone_n, 'Confirmation code: ', (response) => {
+
+            /*
+             * call the api to send auth code
+             */
+            sms.sendMessage(phone_n, `Confirmation code: ${auth_c}`, (response) => {
                 // check the response code
-                if (response.code == 'EAI_AGAIN') res.end(JSON.stringify({ message: 'network_problem' }))
-                res.end(JSON.stringify({ message: 'success_sent' }))
+                if (response.code == 'EAI_AGAIN') {
+                    return callback(JSON.stringify({ message: 'network_problem' }))
+                }
+                return callback(JSON.stringify({ message: 'success_sent' }))
             })
         })
     },
