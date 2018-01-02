@@ -12,6 +12,7 @@
     let _i = m.querySelector('input#id_number')
     let _p = m.querySelector('input#phone')
 
+    let regInfo = document.getElementById('regInfo')
     let phoneMap = new Map()
 
     let pop = document.querySelector('div.__popover')
@@ -60,12 +61,15 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(_j)
             })
-            .then((res) => res.text())
+            .then((res) => res.json())
             .then((data) => {
-                data = JSON.parse(data)
                 if (data.message == 'registered') {
+                    regInfo.innerText = 'Success. Verify phone number'
+
                     // approve membership
                     btnGrant.click()
+                } else if (data.message == 'in_records') {
+                    regInfo.innerText = 'User exists in records'
                 } else {
                     // resend auth code for phone verification
                     aCont.style.display = 'block'
@@ -74,9 +78,6 @@
     })
 
     res_auth.addEventListener('click', function(e) {
-        /*
-         * prompt server to resend the code
-         */
         fetch('/auth/res_auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

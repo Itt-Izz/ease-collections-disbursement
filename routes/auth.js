@@ -48,6 +48,7 @@ router.post('/request_membership', (req, res) => {
      *  request membership and generate access token for use during authentication
      */
     auth.registerClient(req, (message) => {
+        console.log(message)
         res.end(message)
     })
 })
