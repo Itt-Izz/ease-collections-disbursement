@@ -62,7 +62,11 @@ router.get('/recoverMerchPwd/:obj', (req, res) => {
 
 router.get('/logout', (req, res) => {
     // kick out the user
-    res.redirect('/admin')
+    session.destroy(req.ip, (action) => {
+        if (action == true) {
+            res.redirect('/')
+        }
+    })
 })
 
 router.get('/merchantPasswordRecovery', (req, res) => {
