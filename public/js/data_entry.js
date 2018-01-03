@@ -100,6 +100,8 @@
                         }
                     })
             }, this)
+
+            // initialize datatables and add listeners to table rows
             r()
         })
 

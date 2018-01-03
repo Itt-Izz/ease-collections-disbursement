@@ -3,7 +3,8 @@ const router = express.Router();
 
 
 // bring the data model
-let data = require('../utils/data/data');
+let data = require('../utils/data/data')
+
 router.get('/local_collections', (req, res) => {
     res.render('local_col.html')
 })
@@ -22,28 +23,26 @@ router.get('/defaulters', (req, res) => {
 })
 router.get('/reports', (req, res) => {
     res.render('reports.html')
-});
+})
 
-/*
- * retrieve regions to add members to
- */
 router.get('/get_regions', (req, res) => {
+    /*
+     * retrieve regions to add members to
+     */
     data.merchant.retrieveRegions(req, res)
 })
 
-/*
- * retrieve all clients
- */
+
 router.get('/client_list', (req, res) => {
+    /*
+     * retrieve all clients
+     */
     data.merchant.retrieveClients(req, res)
 })
 
-/*
- * receive and process collections
- */
 router.post('/post_colls', (req, res) => {
     /*
-     * handle and errors, post to database, and send feedback
+     * handle errors, post to database, and send feedback
      */
     data.merchant.submitColls(req, res)
 })
