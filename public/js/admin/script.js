@@ -132,6 +132,10 @@
                 console.log(data)
                 if (data.message == 'authenticated') {
                     location.href = '/admin/auth/dashboard'
+                } else if (data.message == 'unauthorized') {
+                    history.pushState(null, 'Password mismatch', '?wrong-password')
+                } else if (data.message == 'mismatch') {
+                    history.pushState(null, 'Both code and password mismatch', '?wrong-credentials')
                 }
             })
     }
