@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/materialdesignicons.css">
 </head>
 
-<body>
+<body id="body">
     <div class="d-flex justify-content-center align-items-center h-100">
         <div class="card" style="width:42vw">
             <div class="card-header">
@@ -29,7 +29,7 @@
                                 <span class="input-group-addon">
                                     <span class="mdi mdi-code-string"></span>
                                 </span>
-                                <input type="text" autofocus="autofocus" name="auth_code" id="merchant_code" placeholder="Your auth code" class="form-control">
+                                <input autocomplete="username" type="text" autofocus="autofocus" name="auth_code" id="merchant_code" placeholder="Your auth code" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -38,7 +38,7 @@
                                 <span class="input-group-addon">
                                    <span class="mdi mdi-settings"></span>
                                 </span>
-                                <input type="password" name="auth_pwd" id="password" placeholder="Password" class="form-control">
+                                <input autocomplete="current-password" type="password" name="auth_pwd" id="password" placeholder="Password" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">

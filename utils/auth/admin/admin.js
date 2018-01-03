@@ -1,8 +1,80 @@
-const database = require('../../database/dbconfig');
-const bcrypt = require('bcrypt');
-const sms = require('../../includes/sms');
+const database = require('../../database/dbconfig')
+const bcrypt = require('bcrypt')
+const sms = require('../../includes/sms')
+
+/**
+ * 
+ * top level database query function
+ * @param {string} sql
+ * @type {Object.<string | number>} opts
+ * @param {Function} callback
+ */
+function queryDatabase(sql, opts, callback) {
+
+    if (opts) {
+        database.conn.query(sql, opts, (err, results) => {
+            if (err) return callback(err)
+            return callback(results)
+        })
+        return
+    }
+    database.conn.query(sql, (err, results) => {
+        if (err) return callback(err)
+        return callback(results)
+    })
+}
 
 module.exports = {
+    /**
+     * 
+     * check admin details
+     * @param {Request} req
+     * @param {Function} callback
+     */
+    checkAdminDetails: (req, callback) => {
+        queryDatabase(`select * from admin`, '', (results) => {
+            if (results.length > 0) return callback(JSON.stringify({
+                message: 'admin_set'
+            }))
+            return callback(JSON.stringify({
+                message: 'set_admin'
+            }))
+        })
+    },
+    /**
+     * 
+     * intiate admin details
+     * @param {Request} req
+     * @param {Function} callback
+     */
+    initiateAdmin: (req, callback) => {
+        let admCode = ((new Date % 7e8).toString(36)).toUpperCase()
+        let admPass = ((new Date % 6e9).toString(27)).toLowerCase()
+
+        let cred = {
+            code: admCode,
+            password: bcrypt.hashSync(admPass, 10),
+            phone: req.body.adminPhone,
+            email: req.body.adminEmail
+        }
+        queryDatabase('insert into admin set ?', cred, (response) => {
+            if (response.affectedRows == 1) {
+                sms.sendMessage(cred.phone, `Admin code: ${cred.code} and Admin password: ${admPass}`, (smsstatus) => {
+                    if (smsstatus.code == 'EAI_AGAIN') {
+                        return callback(JSON.stringify({
+                            message: 'network_problem'
+                        }))
+                    }
+                    return callback(JSON.stringify({
+                        message: 'successfull'
+                    }))
+                })
+            }
+            return callback(JSON.stringify({
+                message: 'failed'
+            }))
+        })
+    },
     /**
      * `authenticate through login`
      * @param {Request} req
@@ -16,11 +88,15 @@ module.exports = {
         database.conn.query(`select * from admin where code = ${database.mysql.escape(cred.auth_code)} and password=${database.mysql.escape(cred.auth_pwd)}`, (err, result) => {
             if (err) throw new Error(err)
             if (result.length < 1) {
-                res.end(JSON.stringify({ message: "failed" }))
+                res.end(JSON.stringify({
+                    message: "failed"
+                }))
             } else if (result.length == 1) {
                 // set sessions
-                req.session.code = result[0].code
-                res.end(JSON.stringify({ message: "authenticated" }))
+
+                res.end(JSON.stringify({
+                    message: "authenticated"
+                }))
             }
         })
     },
@@ -46,16 +122,22 @@ module.exports = {
         database.conn.query(`select * from merchants where merch_phone=${database.mysql.escape(cred.merch_phone)} or merch_email=${database.mysql.escape(cred.merch_email)}`, (err, result) => {
             if (err) throw new Error(err)
             if (result.length > 0) {
-                res.end(JSON.stringify({ 'message': 'record_exists' }));
+                res.end(JSON.stringify({
+                    'message': 'record_exists'
+                }));
             } else {
                 sms.sendMessage(cred.merch_phone, `Code: ${cred.merch_code}, Password:${pwdHash}`, (response) => {
                     if (response.code == 'EAI_AGAIN') {
-                        res.end(JSON.stringify({ 'message': 'network_problem' }));
+                        res.end(JSON.stringify({
+                            'message': 'network_problem'
+                        }));
                     } else {
                         // sms api to send the password and the merch_code
                         database.conn.query(`insert into merchants set ?`, cred, (err, results) => {
                             if (err) throw new Error(err)
-                            res.end(JSON.stringify({ 'message': 'success' }));
+                            res.end(JSON.stringify({
+                                'message': 'success'
+                            }));
                         })
                     }
                 });
@@ -73,7 +155,8 @@ module.exports = {
         let pwd = ((new Date % 5e8).toString(36)).toUpperCase()
         let cred = {
             merch_password: bcrypt.hashSync(pwd, 10),
-        };
+        }
+
         // check if this user exists
         database.conn.query(`select * from merchants where merch_phone=+254${(obj.phone).slice(-9)} and merch_code=${database.mysql.escape(obj.m_code)}`, (err, results) => {
             if (err) console.log(sql)
@@ -83,7 +166,9 @@ module.exports = {
                     console.log(response)
                     if (response.code == 'EAI_AGAIN') {
                         // network problem and message could not be sent
-                        res.end(JSON.stringify({ message: "network_problem" }))
+                        res.end(JSON.stringify({
+                            message: "network_problem"
+                        }))
                     } else {
                         /*
                          * do a database update and check the number of affectedRows
@@ -92,15 +177,21 @@ module.exports = {
                             if (err) throw new Error(err);
                             if (result.affectedRows == 1) {
                                 // end operation
-                                res.end(JSON.stringify({ message: "success" }))
+                                res.end(JSON.stringify({
+                                    message: "success"
+                                }))
                             } else {
-                                res.end(JSON.stringify({ message: "error" }))
+                                res.end(JSON.stringify({
+                                    message: "error"
+                                }))
                             }
                         })
                     }
                 })
             } else {
-                res.end(JSON.stringify({ 'message': 'not_exists' }))
+                res.end(JSON.stringify({
+                    'message': 'not_exists'
+                }))
             }
         })
     }

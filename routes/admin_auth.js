@@ -6,6 +6,24 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../utils/auth/admin/admin')
 
+router.get('/checkAdmin', (req, res) => {
+    /*
+     * check admin details and respond accordingly
+     */
+    auth.checkAdminDetails(req, (response) => {
+        res.end(response)
+    })
+})
+
+router.post('/initiateAdmin', (req, res) => {
+    /*
+     * initiate admin details
+     */
+    auth.initiateAdmin(req, (response) => {
+        res.end(response)
+    })
+})
+
 router.post('/login', (req, res) => {
     /*
      * do a credentials verification and authenticate
