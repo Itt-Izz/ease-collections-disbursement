@@ -1,5 +1,6 @@
 const database = require('../../database/dbconfig')
 const bcrypt = require('bcrypt')
+const session = require('../../session')
 const sms = require('../../includes/sms')
 
 /**
@@ -83,28 +84,32 @@ module.exports = {
 
     },
     /**
-     * `authenticate through login`
+     * authenticate through login
      * @param {Request} req
-     * @param {Response} res
+     * @param {Function} callback
      */
-    requestAuthentication: (req, res) => {
+    requestAuthentication: (req, callback) => {
         let cred = {
             auth_code: req.body.auth_code,
             auth_pwd: req.body.auth_pwd
         }
-        database.conn.query(`select * from admin where code = ${database.mysql.escape(cred.auth_code)} and password=${database.mysql.escape(cred.auth_pwd)}`, (err, result) => {
-            if (err) throw new Error(err)
-            if (result.length < 1) {
-                res.end(JSON.stringify({
-                    message: "failed"
-                }))
-            } else if (result.length == 1) {
-                // set sessions
-
-                res.end(JSON.stringify({
-                    message: "authenticated"
-                }))
+        queryDatabase(`select * from admin where code = ${database.mysql.escape(cred.auth_code)}`, '', (result) => {
+            if (result.length > 0) {
+                if (bcrypt.compareSync(cred.auth_pwd, result[0].password)) {
+                    // set sessions
+                    session.init(req.ip, {
+                        admin: {
+                            code: result[0].code,
+                            phone: result[0].phone,
+                            email: result[0].email
+                        }
+                    })
+                    return callback(JSON.stringify({ message: "authenticated" }))
+                } else {
+                    return callback(JSON.stringify({ message: "unauthorized" }))
+                }
             }
+            return callback(JSON.stringify({ message: "mismatch" }))
         })
     },
     /**

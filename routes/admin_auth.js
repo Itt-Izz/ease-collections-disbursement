@@ -4,6 +4,7 @@
 
 const express = require('express')
 const router = express.Router()
+const session = require('../utils/session')
 const auth = require('../utils/auth/admin/admin')
 
 router.get('/checkAdmin', (req, res) => {
@@ -29,14 +30,20 @@ router.post('/login', (req, res) => {
      * do a credentials verification and authenticate
      * check if admin data exists in database, else request data
      */
-    auth.requestAuthentication(req, res)
+    auth.requestAuthentication(req, (response) => {
+        res.end(response)
+    })
 })
 
 router.get('/dashboard', (req, res) => {
     /*
      * render the dashboard
      */
-    res.render('admin/dashboard.html')
+    if (session.own.find(obj => obj.ipAddrr === req.ip)) {
+        res.render('admin/dashboard.html')
+    } else {
+        res.redirect('/admin')
+    }
 })
 
 router.post('/merchantRegister', (req, res) => {

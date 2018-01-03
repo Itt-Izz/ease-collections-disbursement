@@ -44,7 +44,7 @@
                 i.innerText = 'Ensure you have access to your phone and email address. Authentication code and password will be sent to credentials provided.'
                 sf.appendChild(i)
 
-                function crInputElem(icon, type, name, plc) {
+                function crInputElem(icon, type, name, plc, req) {
                     let ad = document.createElement('div')
                     ad.classList.add('form-group')
                     let bd = document.createElement('div')
@@ -59,14 +59,14 @@
                     i.setAttribute('type', type)
                     i.setAttribute('name', name)
                     i.setAttribute('placeholder', plc)
-                    i.setAttribute('required', 'required')
+                    i.setAttribute('required', req)
                     bd.appendChild(sp)
                     bd.appendChild(i)
                     ad.appendChild(bd)
                     sf.appendChild(ad)
                 }
-                crInputElem('mdi-phone', 'tel', 'adminPhone', 'Phone number')
-                crInputElem('mdi-gmail', 'email', 'adminEmail', 'Email address e.g. someone@example.com')
+                crInputElem('mdi-phone', 'tel', 'adminPhone', 'Phone number', true)
+                crInputElem('mdi-gmail', 'email', 'adminEmail', 'Email address e.g. someone@example.com', true)
 
                 let b = document.createElement('button')
                 b.classList.add('btn', 'btn-info')
@@ -115,6 +115,7 @@
                 })
         })
     }
+
     // admin authentication form
     logForm.onsubmit = function(e) {
         e.preventDefault()
@@ -128,10 +129,9 @@
             })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 if (data.message == 'authenticated') {
                     location.href = '/admin/auth/dashboard'
-                } else {
-                    console.log('failed')
                 }
             })
     }
