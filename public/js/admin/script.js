@@ -101,7 +101,14 @@
                 })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
+                    if (data.message == 'successfull') {
+                        alert('You will receive code and password to login.')
+                        location.reload()
+                    } else if (data.message == 'network_problem') {
+                        alert('Your internet connection is down.Try again!')
+                    } else if (data.message == 'failed') {
+                        alert('Server error! Contact the developer.')
+                    }
                 })
                 .catch(err => {
                     console.log(new Error(err))

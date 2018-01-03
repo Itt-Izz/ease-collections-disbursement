@@ -57,23 +57,30 @@ module.exports = {
             phone: req.body.adminPhone,
             email: req.body.adminEmail
         }
+
         queryDatabase('insert into admin set ?', cred, (response) => {
             if (response.affectedRows == 1) {
                 sms.sendMessage(cred.phone, `Admin code: ${cred.code} and Admin password: ${admPass}`, (smsstatus) => {
+                    console.log(admPass)
                     if (smsstatus.code == 'EAI_AGAIN') {
-                        return callback(JSON.stringify({
-                            message: 'network_problem'
-                        }))
+                        queryDatabase('truncate admin', '', (e) => {
+                            return callback(JSON.stringify({
+                                message: 'network_problem'
+                            }))
+                        })
+                        return
                     }
                     return callback(JSON.stringify({
                         message: 'successfull'
                     }))
                 })
+                return
             }
             return callback(JSON.stringify({
                 message: 'failed'
             }))
         })
+
     },
     /**
      * `authenticate through login`
