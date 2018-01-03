@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/admin', (req, res) => {
-    if (session.own.find(obj => obj.aIpAddrr === req.ip)) {
+    if (session.own.find(obj => obj.ipAddrr === req.ip)) {
         res.redirect('/admin/auth/dashboard')
     } else {
         res.render('admin/auth.html')
