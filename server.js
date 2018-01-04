@@ -7,9 +7,9 @@ const app = express()
 const session = require('./utils/session')
 
 app.engine('html', require('ejs').renderFile)
-    // static files
+// static files
 app.use(express.static(__dirname + '/public'))
-    // middlewares
+ // middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
