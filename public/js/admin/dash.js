@@ -1,5 +1,20 @@
 ((window, document) => {
 
+    // read cookies and update accordingly
+    function getCookie(ckName) {
+        var name = ckName + "="
+        for (var i = 0; i < ckk.length; i++) {
+            var c = ckk[i]
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1)
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length)
+            }
+        }
+        return "";
+    }
+
     // check internet connection
     setInterval(() => {
         if (navigator.onLine) {

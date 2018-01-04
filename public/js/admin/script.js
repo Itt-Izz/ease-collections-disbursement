@@ -131,6 +131,22 @@
             .then(data => {
                 console.log(data)
                 if (data.message == 'authenticated') {
+                    // set cookies here
+                    function setCookie(cname, cvalue, duration = 0) {
+                        var d = new Date()
+                        d.setTime(d.getTime() + (duration * 60 * 60))
+                        var expires = "expires=" + d.toUTCString()
+                        document.cookie = cname + "=" + cvalue + ";" + ";path=/"
+                        return
+                    }
+                    var _encCode = window.btoa(data.credentials.params.admin.code)
+                    var _encEmail = window.btoa(data.credentials.params.admin.email)
+                    var _encPhone = window.btoa(data.credentials.params.admin.phone)
+                    setCookie("i6udhcd", _encCode, 10)
+                    setCookie("i7udhem", _encEmail, 10)
+                    setCookie("i8udhph", _encPhone, 10)
+
+                    // redirect
                     location.href = '/admin/auth/dashboard'
                 } else if (data.message == 'unauthorized') {
                     history.pushState(null, 'Password mismatch', '?wrong-password')
