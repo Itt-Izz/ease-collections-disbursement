@@ -65,7 +65,6 @@ router.post('/verifyCode', (req, res) => {
      * verify phone number
      */
     auth.verifyClientPhoneAccess(req, (message) => {
-        console.log(message)
         res.end(message)
     })
 })

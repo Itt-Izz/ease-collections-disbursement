@@ -1,4 +1,24 @@
-(() => {
+((window, document) => {
+
+    // read cookies and update accordingly
+    let admCookies = decodeURIComponent(document.cookie).split(";")
+
+    function getCookie(ckName) {
+        var name = ckName + "="
+        for (var i = 0; i < admCookies.length; i++) {
+            var c = admCookies[i]
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1)
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length)
+            }
+        }
+        return "";
+    }
+    let admPhone = window.atob(getCookie('i6udhph'))
+    document.getElementById('admc').innerText = window.atob(getCookie('i6udhcd'))
+    document.getElementById('adme').innerText = window.atob(getCookie('i7udhem'))
 
     // check internet connection
     setInterval(() => {
@@ -309,4 +329,4 @@
     by_coun.onclick = function() {
         regData('county');
     }
-})();
+})(window, document);

@@ -31,7 +31,10 @@ router.post('/login', (req, res) => {
      * check if admin data exists in database, else request data
      */
     auth.requestAuthentication(req, (response) => {
-        res.end(response)
+        res.end(JSON.stringify({
+            message: JSON.parse(response).message,
+            credentials: session.getSess(req.ip, cred => cred)
+        }))
     })
 })
 
