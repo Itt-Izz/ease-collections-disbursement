@@ -81,9 +81,10 @@
         placement: "bottom",
         title: "Account options",
         html: true,
+        width: '100px',
         content: () => {
             return (
-                `<div>
+                `<div> 
                     <a href="/admin/auth/logout" class="list-group-item">Sign Out &nbsp;<span class="mdi mdi-logout-variant"></span></a>
                  </div>
                 `

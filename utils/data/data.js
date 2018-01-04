@@ -363,7 +363,7 @@ exports.admin = {
                 FROM
                     collections
                 WHERE
-                    DATE(server_date) >= DATE_SUB(CURDATE(), INTERVAL 8 DAY)
+                    DATE(server_date) >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
                 GROUP BY DATE(server_time)
         `, (err, results) => {
             if (err) throw new Error(err);

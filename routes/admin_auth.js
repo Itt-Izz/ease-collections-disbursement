@@ -64,7 +64,7 @@ router.get('/logout', (req, res) => {
     // kick out the user
     session.destroy(req.ip, (action) => {
         if (action == true) {
-            res.redirect('/')
+            res.redirect('/admin')
         }
     })
 })
