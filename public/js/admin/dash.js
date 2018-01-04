@@ -1,10 +1,12 @@
 ((window, document) => {
 
     // read cookies and update accordingly
+    let admCookies = decodeURIComponent(document.cookie).split(";")
+
     function getCookie(ckName) {
         var name = ckName + "="
-        for (var i = 0; i < ckk.length; i++) {
-            var c = ckk[i]
+        for (var i = 0; i < admCookies.length; i++) {
+            var c = admCookies[i]
             while (c.charAt(0) == ' ') {
                 c = c.substring(1)
             }
@@ -14,6 +16,9 @@
         }
         return "";
     }
+    let admPhone = window.atob(getCookie('i6udhph'))
+    document.getElementById('admc').innerText = window.atob(getCookie('i6udhcd'))
+    document.getElementById('adme').innerText = window.atob(getCookie('i7udhem'))
 
     // check internet connection
     setInterval(() => {
