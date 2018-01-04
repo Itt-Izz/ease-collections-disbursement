@@ -1,4 +1,4 @@
-(() => {
+((window, document) => {
 
     // check internet connection
     setInterval(() => {
@@ -309,4 +309,4 @@
     by_coun.onclick = function() {
         regData('county');
     }
-})();
+})(window, document);
